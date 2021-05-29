@@ -4,6 +4,9 @@ import Register from '../Components/Authentication/Register';
 import Login from '../Components/Authentication/Login'
 import jwtDecode from 'jwt-decode';
 import './App.css';
+import { Paper } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
+import NavigationBar from '../Components/NavBar/NavigationBar'
 
 function App() {
 
@@ -23,10 +26,14 @@ function App() {
 
   
   return (
+    <Paper>
+    <CssBaseline />
+    <NavigationBar user={user} />
     <Switch>
       <Route path='/register' component={Register} />
       <Route path='/login' component={Login} />
     </Switch>
+    </Paper>
   );
 }
 
