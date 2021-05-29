@@ -276,13 +276,13 @@ export default function NavigationBar() {
           </IconButton>
           <Link component={RouterLink} to={''} className={classes.navlink}>
             <Typography className={classes.title} variant="h6" noWrap>
-              Star Wars Collectibles
+              Care 4 Kids
             </Typography>
           </Link>
-          <div className={classes.role}>
+          {/* <div className={classes.role}>
           {buyerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Buyer </Typography> }
           {sellerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Seller </Typography> }  
-          </div>
+          </div> */}
           {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -331,20 +331,6 @@ export default function NavigationBar() {
             </Link> } */}
 
           {/* Icons with Badges */}
-          {buyerTitleDisabled === false && <Link component={RouterLink} to={'shoppingCart'} className={classes.navlink}>
-              <IconButton aria-label="show cart items" color="inherit">
-                <Badge badgeContent={cartCount} color="secondary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
-            </Link> }
-            
-            {buyerTitleDisabled === false && <Link component={RouterLink} to={'checkOut'} className={classes.navlink}>
-              <IconButton aria-label="goto checkout" color="inherit">
-                  <CheckCircleOutlineIcon />
-              </IconButton>
-            </Link> }
-
             {initialLogin === false && <IconButton aria-label="show new mails" color="inherit">
               <Badge badgeContent={mailCount} color="secondary">
                 <MailIcon />
