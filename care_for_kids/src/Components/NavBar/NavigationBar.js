@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom'
 import { fade, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,6 +27,8 @@ import ServiceLayer from '../../Service/serviceLayer';
 import jwtDecode from 'jwt-decode';
 
 
+
+
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -38,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+  },
+  navbar: {
+    background: '#5EBA7D'
   },
   role: {
     position: 'relative',
@@ -95,14 +101,14 @@ export default function NavigationBar() {
   const jwt = localStorage.getItem('token');
 
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [cartCount, setCartCount] = React.useState(0);
-  const [mailCount, setMailCount] = React.useState(0);
-  const [notificationCount, setNotificationCount] = React.useState(0);
-  const [sellerTitleDisabled, setSellerTitleDisabled] = React.useState(true);
-  const [buyerTitleDisabled, setBuyerTitleDisabled] = React.useState(true);
-  const [initialLogin, setInitialLogin] = React.useState(true)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
+  const [mailCount, setMailCount] = useState(0);
+  const [notificationCount, setNotificationCount] = useState(0);
+  const [sellerTitleDisabled, setSellerTitleDisabled] = useState(true);
+  const [buyerTitleDisabled, setBuyerTitleDisabled] = useState(true);
+  const [initialLogin, setInitialLogin] = useState(true)
 
   useEffect(() => {
     if (jwt) {
@@ -201,36 +207,22 @@ export default function NavigationBar() {
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
+      color="primary"
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <Link component={RouterLink} to={'productList'}  >
-          <IconButton aria-label="product list" color="inherit">
-            <ListIcon />
-          </IconButton>
-          Products
-        </Link>
-      </MenuItem>
-      <MenuItem>
-        <Link component={RouterLink} to={'OrderList'}  >
-          <IconButton aria-label="order list" color="inherit">
-            <HistoryIcon />
-          </IconButton>
-          Orders
-        </Link>
-      </MenuItem>
-      <MenuItem>
-        <Link component={RouterLink} to={'shoppingCart'}>
-          <IconButton aria-label="show 5 cart items" color="inherit">
-            <Badge badgeContent={cartCount} color="secondary">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-          Shopping Cart
-        </Link>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show new mails" color="inherit">
@@ -248,32 +240,22 @@ export default function NavigationBar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
     </Menu>
   );
 
+
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.navbar}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Link component={RouterLink} to={''} className={classes.navlink}>
             <Typography className={classes.title} variant="h6" noWrap>
               Care 4 Kids

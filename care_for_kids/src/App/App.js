@@ -8,6 +8,7 @@ import { Paper } from '@material-ui/core';
 import { CssBaseline } from '@material-ui/core';
 import NavigationBar from '../Components/NavBar/NavigationBar'
 
+
 function App() {
 
   const [user, setUser] = useState();

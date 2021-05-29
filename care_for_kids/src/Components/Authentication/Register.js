@@ -11,7 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ServiceLayer from '../../Service/serviceLayer'
+import ServiceLayer from '../../Service/serviceLayer';
+import SideImage from '../../Assets/blocks_image.jpg';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: `url(${Image})`,
+    backgroundImage: `url(${SideImage})`,
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    backgroundPosition: 'top',
   },
   paper: {
     margin: theme.spacing(8, 4),
