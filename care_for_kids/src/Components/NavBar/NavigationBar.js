@@ -257,13 +257,23 @@ export default function NavigationBar() {
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.navbar}>
+        {/* CREATE AN INITIAL LOGIN VIEW */}
         <Toolbar>
-          <Link component={RouterLink} to={''} underline="none" className={classes.navlink}>
+          {initialLogin ? 
+          <Link component={RouterLink} to={'/login'} underline="none" className={classes.navlink}>
             <Typography className={classes.title} paragraph={false} align="center" noWrap>
               {/* <span><strong style={{color: '#C64D4E'}} >Care</strong><strong style={{color: 'blue'}}> 4</strong><strong style={{color: 'yellow'}}> Kids</strong></span> */}
               <img className={classes.image} src={Logo} alt="Logo"/>
             </Typography>
           </Link>
+        :
+          <Link component={RouterLink} to={''} underline="none" className={classes.navlink}>
+          <Typography className={classes.title} paragraph={false} align="center" noWrap>
+            {/* <span><strong style={{color: '#C64D4E'}} >Care</strong><strong style={{color: 'blue'}}> 4</strong><strong style={{color: 'yellow'}}> Kids</strong></span> */}
+            <img className={classes.image} src={Logo} alt="Logo"/>
+          </Typography>
+        </Link>      
+        }
           <div className={classes.role}>
           {buyerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Buyer </Typography> }
           {sellerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Seller </Typography> }  
@@ -309,6 +319,8 @@ export default function NavigationBar() {
           </div>
         </Toolbar>
       </AppBar>
+      {/* CREATE DAYCARE VIEW */}
+      {/* CREATE PARENT VIEW */}
       {renderMobileMenu}
       {renderMenu}
     </div>
