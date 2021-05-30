@@ -19,7 +19,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import HistoryIcon from '@material-ui/icons/History';
 import ListIcon from '@material-ui/icons/List';
-import CategoryIcon from '@material-ui/icons/Category';
+import InfoIcon from '@material-ui/icons/Info';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 // import Controls from '../controls/Controls';
 import Link from '@material-ui/core/Link';
@@ -223,34 +223,21 @@ export default function NavigationBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show new mails" color="inherit">
-          <Badge badgeContent={mailCount} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={notificationCount} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-    </Menu>
+      {initialLogin ?  
+      <>
+            <MenuItem onClick={handleProfileMenuOpen}>
+            <p style={{marginLeft: '5px'}} >About Us</p>
+          </MenuItem>
+          <MenuItem >
+            <p style={{textAlign:"center"}} >Login</p>
+          </MenuItem>
+      </>
+      : 
+      
+      <></>
+      
+      }
+      </Menu>
   );
 
 

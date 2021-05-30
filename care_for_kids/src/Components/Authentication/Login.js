@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
       margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: '#B200FF',
     },
     form: {
       width: '100%', // Fix IE 11 issue.
@@ -44,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      backgroundColor: '#60B0F4',
+      fontWeight: 'bold',
     },
   }));
   
@@ -148,19 +150,18 @@ const useStyles = makeStyles((theme) => ({
                 type="submit"
                 fullWidth
                 variant="contained"
-                color="primary"
                 className={classes.submit}
               >
                 Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="#" style={{color: '#5EBA7D', fontWeight: 'bolder'}} variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link component={RouterLink} to={'registration'} variant="body2">
+                  <Link component={RouterLink} style={{color: '#5EBA7D', fontWeight: 'bolder'}} to={'registration'} variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

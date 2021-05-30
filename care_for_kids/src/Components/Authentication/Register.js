@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#B200FF',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -42,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#60B0F4',
+    fontWeight: 'bold',
   },
 }));
 
@@ -254,20 +256,19 @@ export default function Register() {
                     onChange={onChangeCurrencyCode}
                   />
                 </Grid> */}
+                <Grid item ><span>Are you registering a daycare?</span></Grid>
                 <Grid item xs={3}>
                   <FormControlLabel
                     value="top"
                     control ={
                       <Checkbox
-                        style={{marginTop: '16'}}
+                        style={{position: 'relative', bottom: '11px', color: '#5EBA7D'}}
                         name="is_daycare"
                         id="is_daycare"
                         checked={user.is_daycare}
                         onChange={onChangeIsDaycare}
                       />
                     } 
-                    label="Are you registering for a daycare?"
-                    labelPlacement="top"
                   />
                 </Grid>
             </Grid>
@@ -288,7 +289,7 @@ export default function Register() {
                 </Link> */}
               </Grid>
               <Grid item>
-                <Link component={RouterLink} to={''} variant="body2">
+                <Link component={RouterLink} to={'/login'} style={{color: '#5EBA7D', fontWeight: 'bolder'}} variant="body2">
                   {"Already have an account? Sign In"}
                 </Link>
               </Grid>
