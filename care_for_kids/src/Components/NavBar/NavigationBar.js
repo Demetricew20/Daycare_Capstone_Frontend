@@ -25,6 +25,7 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import Link from '@material-ui/core/Link';
 import ServiceLayer from '../../Service/serviceLayer';
 import jwtDecode from 'jwt-decode';
+import Logo from '../../Assets/logo.png'
 
 
 
@@ -37,10 +38,17 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    display: 'none',
+    display: 'inline',
+    fontFamily: 'Architects Daughter',
     [theme.breakpoints.up('sm')]: {
-      display: 'block',
+      display: 'inline',
     },
+  },
+  image: {
+    padding: '0',
+    margin: '0',
+    height: '90px',
+    width: '350px'
   },
   navbar: {
     background: '#5EBA7D'
@@ -93,7 +101,8 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     listStyle: 'none',
     position: 'relative',
-  }
+    textDecoration: 'none',
+  },
 }));
 
 export default function NavigationBar() {
@@ -248,42 +257,22 @@ export default function NavigationBar() {
     <div className={classes.grow}>
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <Link component={RouterLink} to={''} className={classes.navlink}>
-            <Typography className={classes.title} variant="h6" noWrap>
-              Care 4 Kids
+          <Link component={RouterLink} to={''} underline="none" className={classes.navlink}>
+            <Typography className={classes.title} paragraph={false} align="center" noWrap>
+              {/* <span><strong style={{color: '#C64D4E'}} >Care</strong><strong style={{color: 'blue'}}> 4</strong><strong style={{color: 'yellow'}}> Kids</strong></span> */}
+              <img className={classes.image} src={Logo} alt="Logo"/>
             </Typography>
           </Link>
-          {/* <div className={classes.role}>
+          <div className={classes.role}>
           {buyerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Buyer </Typography> }
           {sellerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Seller </Typography> }  
-          </div> */}
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div> */}
+          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
 
 
-          {/* BUYER: Conditional Links */}
+          {/* BUYER: Conditional Links
           {/* {initialLogin === false && <Link component={RouterLink} to={'productList'}  >
               <Controls.Button 
                 aria-label="product list" 
