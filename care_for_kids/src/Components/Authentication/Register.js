@@ -17,13 +17,13 @@ import SideImage from '../../Assets/blocks_image.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: '90vh',
   },
   image: {
     backgroundImage: `url(${SideImage})`,
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
+    backgroundSize: '100%',
     backgroundPosition: 'top',
   },
   paper: {

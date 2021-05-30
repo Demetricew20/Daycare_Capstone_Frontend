@@ -19,7 +19,7 @@ import SideImage from '../../Assets/kids_reading.jpg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      height: '100vh',
+      height: '90vh',
     },
     image: {
       backgroundImage: `url(${SideImage})`,
@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
         theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
       backgroundSize: 'cover',
       backgroundPosition: 'center',
+      position: 'relative',
     },
     paper: {
       margin: theme.spacing(8, 4),
