@@ -37,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
+  links: {
     display: 'inline',
-    fontFamily: 'Architects Daughter',
+    margin: '0 5rem 0 5rem',
+    fontFamily: 'Roboto', 
     [theme.breakpoints.up('sm')]: {
       display: 'inline',
     },
@@ -269,37 +270,9 @@ export default function NavigationBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-
-
-
-          {/* BUYER: Conditional Links
-          {/* {initialLogin === false && <Link component={RouterLink} to={'productList'}  >
-              <Controls.Button 
-                aria-label="product list" 
-                color="primary.light" 
-                text="Products"
-                startIcon={<ListIcon />}
-              >Products</Controls.Button>
-            </Link> } */}
-            {/* {buyerTitleDisabled === false && <Link component={RouterLink} to={'OrderList'}  >
-              <Controls.Button 
-                aria-label="order history" 
-                color="primary.light" 
-                text="Orders" 
-                startIcon={<HistoryIcon 
-              />}>Orders</Controls.Button>
-            </Link> } */}
-                    
-                    
-          {/* SELLER: Conditional Links */}
-          {/* {sellerTitleDisabled === false &&<Link component={RouterLink} to={'categoryList'}  >
-              <Controls.Button 
-                aria-label="category list" 
-                color="default" 
-                text="Categories" 
-                startIcon={<CategoryIcon 
-              />}>Orders</Controls.Button>
-            </Link> } */}
+            {/* NEED TO ADD LINKS */}
+          {initialLogin === true && <Typography className={classes.links} variant="h5" noWrap> About Us </Typography> }
+          {initialLogin === true && <Typography className={classes.links} variant="h5" noWrap> Login </Typography> }
 
           {/* Icons with Badges */}
             {initialLogin === false && <IconButton aria-label="show new mails" color="inherit">
