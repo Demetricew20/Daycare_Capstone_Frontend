@@ -7,6 +7,7 @@ import './App.css';
 import { Paper } from '@material-ui/core';
 import { CssBaseline } from '@material-ui/core';
 import NavigationBar from '../Components/NavBar/NavigationBar'
+import DaycareProfile from '../Components/Profiles/DaycareProfile';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
     <Switch>
       <Route path='/register' component={Register} />
       <Route path='/login' component={Login} />
+      <Route path='/daycareProfile' component={DaycareProfile} />
     </Switch>
     </Paper>
   );
