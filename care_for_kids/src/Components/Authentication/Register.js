@@ -101,7 +101,7 @@ export default function Register() {
   const handleChanges = (e) => {
     setUser({
         ...user,
-        [e.target.name]: e.target.value.trim()
+        [e.target.name]: e.target.value
     })
   }
 

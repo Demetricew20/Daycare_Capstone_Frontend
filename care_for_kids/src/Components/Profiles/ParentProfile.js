@@ -40,10 +40,15 @@ const useStyles = makeStyles((theme) => ({
         width: '100%', // Fix IE 11 issue.
         // marginTop: theme.spacing(1),
     },
+    icon: {
+        color: '#5EBA7D',
+        cursor: 'pointer',
+    },
     submit: {
         margin: theme.spacing(3, 0, 2),
-        backgroundColor: '#60B0F4',
-        fontWeight: 'bold',
+        backgroundColor: '#B200FF',
+        fontWeight: 'bolder',
+        color: '#EDE9E1'
     },
     }));
 
@@ -69,6 +74,19 @@ export default function DaycareProfile() {
         option3: false
     })
 
+    const handleParentChanges = (e) => {
+        setParent({
+            ...parent,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleChildChanges = (e) => {
+        setChild({
+            ...child,
+            [e.target.name]: e.target.value
+        })
+    }
 
 
     return (
@@ -88,7 +106,7 @@ export default function DaycareProfile() {
                     label="Street Address"
                     name="street_address"
                     value={parent.street_address}
-                    // onChange={handleChanges}
+                    onChange={handleParentChanges}
                     autoComplete="street_address"
                     autoFocus
                     />
@@ -103,7 +121,7 @@ export default function DaycareProfile() {
                     label="City"
                     name="city"
                     value={parent.city}
-                    // onChange={handleChanges}
+                    onChange={handleParentChanges}
                     autoComplete="city"
                     autoFocus
                     />
@@ -112,14 +130,14 @@ export default function DaycareProfile() {
                     <TextField
                     variant="outlined"
                     margin="normal"
-                    // inputProps={{max: '3'}}
+                    //inputProps={{max: '3'}}
                     required
                     fullWidth
                     id="state"
                     label="State"
                     name="state"
                     value={parent.state}
-                    // onChange={handleChanges}
+                    onChange={handleParentChanges}
                     autoComplete="state"
                     autoFocus
                     />
@@ -134,7 +152,7 @@ export default function DaycareProfile() {
                     label="Zip"
                     name="zip_code"
                     value={parent.zip_code}
-                    // onChange={handleChanges}
+                    onChange={handleParentChanges}
                     autoComplete="zip_code"
                     autoFocus
                     />
@@ -149,12 +167,12 @@ export default function DaycareProfile() {
                     margin="normal"
                     required
                     fullWidth
-                    id="zip_code"
+                    id="name"
                     label="Child Name"
-                    name="zip_code"
-                    value={parent.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
+                    name="name"
+                    value={child.name}
+                    onChange={handleChildChanges}
+                    autoComplete="name"
                     autoFocus
                     />
                     </Grid>
@@ -165,12 +183,12 @@ export default function DaycareProfile() {
                     margin="normal"
                     required
                     fullWidth
-                    id="teacher_child_ratio"
+                    id="age_group"
                     label="Age Group"
-                    name="teacher_child_ratio"
-                    
-                    // onChange={handleChanges}
-                    autoComplete="teacher_child_ratio"
+                    name="age_group"
+                    value={child.age_group}
+                    onChange={handleChildChanges}
+                    autoComplete="age_group"
                     autoFocus
                     />
                     </Grid>
@@ -179,7 +197,7 @@ export default function DaycareProfile() {
                             <span onClick={() =>setOptions({...options, option1: true}) }>
                                 {options.option1 === true  ? <></>
                                 :  
-                                <AddBoxIcon color='secondary' style={{cursor: 'pointer'}} />
+                                <AddBoxIcon className={classes.icon}/>
                                 }
                             </span>
                         </div>
@@ -195,12 +213,12 @@ export default function DaycareProfile() {
                     margin="normal"
                     required
                     fullWidth
-                    id="zip_code"
+                    id="name"
                     label="Child Name"
-                    name="zip_code"
-                    value={parent.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
+                    name="name"
+                    value={child.name}
+                    onChange={handleChildChanges}
+                    autoComplete="name"
                     autoFocus
                     />
                     </Grid>
@@ -225,7 +243,7 @@ export default function DaycareProfile() {
                             <span onClick={() =>setOptions({...options, option2: true}) }>
                                 {options.option2 === true  ? <></>
                                 :  
-                                <AddBoxIcon color='secondary' style={{cursor: 'pointer'}} />
+                                <AddBoxIcon color='secondary' className={classes.icon}  />
                                 }
                             </span>
                         </div>
@@ -245,12 +263,12 @@ export default function DaycareProfile() {
                     margin="normal"
                     required
                     fullWidth
-                    id="zip_code"
+                    id="name"
                     label="Child Name"
-                    name="zip_code"
-                    value={parent.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
+                    name="name"
+                    value={child.name}
+                    onChange={handleChildChanges}
+                    autoComplete="name"
                     autoFocus
                     />
                     </Grid>
@@ -275,7 +293,7 @@ export default function DaycareProfile() {
                             <span onClick={() =>setOptions({...options, option3: true}) }>
                                 {options.option3 === true  ? <></>
                                 :  
-                                <AddBoxIcon color='secondary' style={{cursor: 'pointer'}} />
+                                <AddBoxIcon color='secondary' className={classes.icon} />
                                 }
                             </span>
                         </div>
@@ -295,12 +313,12 @@ export default function DaycareProfile() {
                     margin="normal"
                     required
                     fullWidth
-                    id="zip_code"
+                    id="name"
                     label="Child Name"
-                    name="zip_code"
-                    value={parent.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
+                    name="name"
+                    value={child.name}
+                    onChange={handleChildChanges}
+                    autoComplete="name"
                     autoFocus
                     />
                     </Grid>
@@ -326,7 +344,7 @@ export default function DaycareProfile() {
                     }
                     <Grid item xs={4} />
                     <Grid item xs={4}>
-                        <Button fullWidth variant="contained" type="submit" color="primary">Submit</Button>
+                        <Button fullWidth variant="contained" color="primary" type="submit" className={classes.submit}>Submit</Button>
                     </Grid>
                     <Grid item xs={4} />
                     <Grid item xs={1} />
