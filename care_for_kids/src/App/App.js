@@ -6,8 +6,9 @@ import jwtDecode from 'jwt-decode';
 import './App.css';
 import { Paper } from '@material-ui/core';
 import { CssBaseline } from '@material-ui/core';
-import NavigationBar from '../Components/NavBar/NavigationBar'
+import NavigationBar from '../Components/NavBar/NavigationBar';
 import DaycareProfile from '../Components/Profiles/DaycareProfile';
+import ParentProfile from '../Components/Profiles/ParentProfile';
 
 
 function App() {
@@ -34,7 +35,8 @@ function App() {
     <Switch>
       <Route path='/register' component={Register} />
       <Route path='/login' component={Login} />
-      <Route path='/daycareProfile' component={DaycareProfile} />
+      <Route path='/create-daycare-profile' component={DaycareProfile} />
+      <Route path='/create-parent-profile' component={ParentProfile} />
     </Switch>
     </Paper>
   );

@@ -5,7 +5,7 @@ import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button, FormControl, InputLabel } from '@material-ui/core';
-import Image from '../../Assets/daycare_toys.jpg';
+import Image from '../../Assets/daycare_room.jpg';
 import { TextField } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { Dropdown } from 'react-bootstrap';
@@ -13,7 +13,7 @@ import { Dropdown } from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '150vh',
+        height: '90vh',
         backgroundImage: `url(${Image})`,
         backgroundSize: 'cover',
         backgroundPosition: 'top',
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         backgroundColor: '#F6F5F3',
-        opacity: '.98',
+        opacity: '.90',
         position: 'relative',
         top: '100px',
         display: 'flex',
@@ -50,20 +50,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DaycareProfile() {
     const classes = useStyles();
-    const [daycare, setDaycare] = useState({
-        name: '',
+    const [parent, setParent] = useState({
         street_address: '',
         city: '',
         state: '',
         zip_code: '',
-        images: '',
-        description: '',
-        min_cost: '',
-        max_cost: '',
-        teacher_child_ratio: '',
+        child: [],
         availability: true,
         age_groups: []
     });
+    const [child, setChild] = useState({
+        name: '',
+        age_group: null
+    })
     const [options, setOptions] = useState({
         option1: false,
         option2: false,
@@ -75,47 +74,9 @@ export default function DaycareProfile() {
     return (
         <div className={classes.root}>
         <Paper className={classes.paper} >
-        <div style={{textAlign: 'center'}}><p><h1>Daycare Profile</h1></p></div>
+        <div style={{textAlign: 'center'}}><p><h1>Create Your Profile</h1></p></div>
             <form className={classes.form} noValidate onSubmit>
                 <Grid container spacing={3} className={classes.grid}>
-                    <Grid item xs={4}/>
-                    <Grid item xs={4}  >
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Daycare Name"
-                    name="name"
-                    value={daycare.name}
-                    // onChange={handleChanges}
-                    autoComplete="name"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={4}/>
-                    <Grid item xs={2} />
-                    <Grid item xs={8}  >
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    multiline={true}
-                    size='medium'
-                    rows={10}
-                    required
-                    fullWidth
-                    id="description"
-                    label="Daycare Description"
-                    placeholder="250 characters max"
-                    name="description"
-                    value={daycare.description}
-                    // onChange={handleChanges}
-                    autoComplete="description"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={2} />
                     <Grid item xs={2}/>
                     <Grid item xs={3}>
                     <TextField
@@ -126,7 +87,7 @@ export default function DaycareProfile() {
                     id="street_address"
                     label="Street Address"
                     name="street_address"
-                    value={daycare.street_address}
+                    value={parent.street_address}
                     // onChange={handleChanges}
                     autoComplete="street_address"
                     autoFocus
@@ -141,7 +102,7 @@ export default function DaycareProfile() {
                     id="city"
                     label="City"
                     name="city"
-                    value={daycare.city}
+                    value={parent.city}
                     // onChange={handleChanges}
                     autoComplete="city"
                     autoFocus
@@ -157,7 +118,7 @@ export default function DaycareProfile() {
                     id="state"
                     label="State"
                     name="state"
-                    value={daycare.state}
+                    value={parent.state}
                     // onChange={handleChanges}
                     autoComplete="state"
                     autoFocus
@@ -172,15 +133,16 @@ export default function DaycareProfile() {
                     id="zip_code"
                     label="Zip"
                     name="zip_code"
-                    value={daycare.zip_code}
+                    value={parent.zip_code}
                     // onChange={handleChanges}
                     autoComplete="zip_code"
                     autoFocus
                     />
                     </Grid>
-                    <Grid item xs={1}/>
                     <Grid item xs={2}/>
-                    <Grid item xs={2}>
+                    {/* Child */}
+                    <Grid item xs={2}/>
+                    <Grid item xs={4}>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
                     <TextField
                     variant="outlined"
@@ -188,54 +150,25 @@ export default function DaycareProfile() {
                     required
                     fullWidth
                     id="zip_code"
-                    label="Age Group"
+                    label="Child Name"
                     name="zip_code"
-                    value={daycare.zip_code}
+                    value={parent.zip_code}
                     // onChange={handleChanges}
                     autoComplete="zip_code"
                     autoFocus
                     />
                     </Grid>
-                    <Grid item xs={2}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Est. Min Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={2}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Est. Max Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={1}/>
+                    <Grid item xs={3}>
                     <TextField
                     variant="outlined"
                     margin="normal"
                     required
                     fullWidth
                     id="teacher_child_ratio"
-                    label="Teacher:Child ratio"
+                    label="Age Group"
                     name="teacher_child_ratio"
-                    value={daycare.teacher_child_ratio}
+                    
                     // onChange={handleChanges}
                     autoComplete="teacher_child_ratio"
                     autoFocus
@@ -254,7 +187,8 @@ export default function DaycareProfile() {
                     {options.option1 === true ? 
                     <>
                     <Grid item xs={2}/>
-                    <Grid item xs={2}>
+                    {/* Child */}
+                    <Grid item xs={4}>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
                     <TextField
                     variant="outlined"
@@ -262,54 +196,25 @@ export default function DaycareProfile() {
                     required
                     fullWidth
                     id="zip_code"
-                    label="Age Group"
+                    label="Child Name"
                     name="zip_code"
-                    value={daycare.zip_code}
+                    value={parent.zip_code}
                     // onChange={handleChanges}
                     autoComplete="zip_code"
                     autoFocus
                     />
                     </Grid>
-                    <Grid item xs={2}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Est. Min Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={2}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Est. Max Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={1}/>
+                    <Grid item xs={3}>
                     <TextField
                     variant="outlined"
                     margin="normal"
                     required
                     fullWidth
                     id="teacher_child_ratio"
-                    label="Est. Max Monthly Cost"
+                    label="Age Group"
                     name="teacher_child_ratio"
-                    value={daycare.teacher_child_ratio}
+                    
                     // onChange={handleChanges}
                     autoComplete="teacher_child_ratio"
                     autoFocus
@@ -317,12 +222,12 @@ export default function DaycareProfile() {
                     </Grid>
                     <Grid item xs={1}>
                         <div style={{marginTop: '30px'}}>
-                        <span onClick={() =>setOptions({...options, option2: true}) }>
+                            <span onClick={() =>setOptions({...options, option2: true}) }>
                                 {options.option2 === true  ? <></>
                                 :  
                                 <AddBoxIcon color='secondary' style={{cursor: 'pointer'}} />
                                 }
-                        </span>
+                            </span>
                         </div>
                     </Grid>
                     </>
@@ -332,7 +237,8 @@ export default function DaycareProfile() {
                     {options.option2 === true ? 
                     <>
                     <Grid item xs={2}/>
-                    <Grid item xs={2}>
+                    {/* Child */}
+                    <Grid item xs={4}>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
                     <TextField
                     variant="outlined"
@@ -340,52 +246,38 @@ export default function DaycareProfile() {
                     required
                     fullWidth
                     id="zip_code"
+                    label="Child Name"
+                    name="zip_code"
+                    value={parent.zip_code}
+                    // onChange={handleChanges}
+                    autoComplete="zip_code"
+                    autoFocus
+                    />
+                    </Grid>
+                    <Grid item xs={1}/>
+                    <Grid item xs={3}>
+                    <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="teacher_child_ratio"
                     label="Age Group"
-                    name="zip_code"
-                    value={daycare.zip_code}
+                    name="teacher_child_ratio"
+                    
                     // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Estimated Min Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Estimated Max Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
+                    autoComplete="teacher_child_ratio"
                     autoFocus
                     />
                     </Grid>
                     <Grid item xs={1}>
                         <div style={{marginTop: '30px'}}>
-                        <span onClick={() =>setOptions({...options, option3: true}) }>
+                            <span onClick={() =>setOptions({...options, option3: true}) }>
                                 {options.option3 === true  ? <></>
                                 :  
                                 <AddBoxIcon color='secondary' style={{cursor: 'pointer'}} />
                                 }
-                        </span>
+                            </span>
                         </div>
                     </Grid>
                     </>
@@ -395,7 +287,8 @@ export default function DaycareProfile() {
                     {options.option3 === true ? 
                     <>
                     <Grid item xs={2}/>
-                    <Grid item xs={2}>
+                    {/* Child */}
+                    <Grid item xs={4}>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
                     <TextField
                     variant="outlined"
@@ -403,41 +296,27 @@ export default function DaycareProfile() {
                     required
                     fullWidth
                     id="zip_code"
+                    label="Child Name"
+                    name="zip_code"
+                    value={parent.zip_code}
+                    // onChange={handleChanges}
+                    autoComplete="zip_code"
+                    autoFocus
+                    />
+                    </Grid>
+                    <Grid item xs={1}/>
+                    <Grid item xs={3}>
+                    <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="teacher_child_ratio"
                     label="Age Group"
-                    name="zip_code"
-                    value={daycare.zip_code}
+                    name="teacher_child_ratio"
+                    
                     // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Estimated Min Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
-                    </Grid>
-                    <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Estimated Max Monthly Cost"
-                    name="zip_code"
-                    value={daycare.zip_code}
-                    // onChange={handleChanges}
-                    autoComplete="zip_code"
+                    autoComplete="teacher_child_ratio"
                     autoFocus
                     />
                     </Grid>
