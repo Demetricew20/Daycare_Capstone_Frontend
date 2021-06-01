@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Button, FormControl, InputLabel } from '@material-ui/core';
+import { Button, FormControl, InputLabel, MenuItem } from '@material-ui/core';
 import Image from '../../Assets/daycare_room.jpg';
 import { TextField } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import { Dropdown } from 'react-bootstrap';
+import Select from '@material-ui/core/Select';
+import serviceLayer from '../../Service/serviceLayer';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +46,17 @@ const useStyles = makeStyles((theme) => ({
         color: '#5EBA7D',
         cursor: 'pointer',
     },
+    select: {
+        width: '17rem',
+        position: 'relative',
+        right: '30px',
+        top: '10px',
+
+    },
+    add_child: {
+        color: 'black',
+
+    },
     submit: {
         margin: theme.spacing(3, 0, 2),
         backgroundColor: '#B200FF',
@@ -55,6 +68,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DaycareProfile() {
     const classes = useStyles();
+
+    useEffect(() => {
+        getAgeGroups();
+    }, [])
+
     const [parent, setParent] = useState({
         street_address: '',
         city: '',
@@ -64,15 +82,46 @@ export default function DaycareProfile() {
         availability: true,
         age_groups: []
     });
-    const [child, setChild] = useState({
+    const [child1, setChild1] = useState({
         name: '',
-        age_group: null
+        age_group: null,
+        added: false
     })
+    const [child2, setChild2] = useState({
+        name: '',
+        age_group: null,
+        added: false
+    })
+    const [child3, setChild3] = useState({
+        name: '',
+        age_group: null,
+        added: false
+    })
+    const [child4, setChild4] = useState({
+        name: '',
+        age_group: null,
+        added: false
+    })
+
+    let childArray = [child1, child2, child3, child4]
+
+    const [ageGroups, setAgeGroups] = useState([])
     const [options, setOptions] = useState({
         option1: false,
         option2: false,
         option3: false
     })
+
+    async function getAgeGroups(){
+        try{
+            const response = await serviceLayer.getAllAgeGroups();
+            console.log(response.data);
+            setAgeGroups(response.data);
+        }
+        catch(err){
+            console.log('Request for Age Groups invalid', err);
+        }
+    }
 
     const handleParentChanges = (e) => {
         setParent({
@@ -81,19 +130,149 @@ export default function DaycareProfile() {
         })
     }
 
-    const handleChildChanges = (e) => {
-        setChild({
-            ...child,
+    const handleChild1Change = (e) => {
+        setChild1({
+            ...child1,
+            [e.target.name]: e.target.value
+        })
+    }
+    const handleChild2Change = (e) => {
+        setChild2({
+            ...child2,
+            [e.target.name]: e.target.value
+        })
+    }
+    const handleChild3Change = (e) => {
+        setChild3({
+            ...child3,
+            [e.target.name]: e.target.value
+        })
+    }
+    const handleChild4Change = (e) => {
+        setChild4({
+            ...child4,
             [e.target.name]: e.target.value
         })
     }
 
+    const selectAgeGroup1 = () => {
+        
+        return (
+            <FormControl className={classes.select}>
+                <InputLabel htmlFor="age_group">Age Group</InputLabel>
+                <Select
+                name="age_group"
+                value={child1.age_group}
+                onChange={handleChild1Change}
+                input={<Input id="age_group" />}
+                >
+                {ageGroups && ageGroups.map((groups, i) => {
+                    return (
+                        <MenuItem key={i} value={groups.group_name}>{groups.group_name}</MenuItem>
+                        
+                    )
+                    
+                })}
+                </Select>
+            </FormControl>
+        )
+    }
+    const selectAgeGroup2 = () => {
+        
+        return (
+            <FormControl className={classes.select}>
+                <InputLabel htmlFor="age_group">Age Group</InputLabel>
+                <Select
+                name="age_group"
+                value={child2.age_group}
+                onChange={handleChild2Change}
+                input={<Input id="age_group" />}
+                >
+                {ageGroups && ageGroups.map((groups, i) => {
+                    return (
+                        <MenuItem key={i} value={groups.group_name}>{groups.group_name}</MenuItem>
+                        
+                    )
+                    
+                })}
+                </Select>
+            </FormControl>
+        )
+    }
+    const selectAgeGroup3 = () => {
+        
+        return (
+            <FormControl className={classes.select}>
+                <InputLabel htmlFor="age_group">Age Group</InputLabel>
+                <Select
+                name="age_group"
+                value={child3.age_group}
+                onChange={handleChild3Change}
+                input={<Input id="age_group" />}
+                >
+                {ageGroups && ageGroups.map((groups, i) => {
+                    return (
+                        <MenuItem key={i} value={groups.group_name}>{groups.group_name}</MenuItem>
+                        
+                    )
+                    
+                })}
+                </Select>
+            </FormControl>
+        )
+    }
+    const selectAgeGroup4 = () => {
+        
+        return (
+            <FormControl className={classes.select}>
+                <InputLabel htmlFor="age_group">Age Group</InputLabel>
+                <Select
+                name="age_group"
+                value={child4.age_group}
+                onChange={handleChild4Change}
+                input={<Input id="age_group" />}
+                >
+                {ageGroups && ageGroups.map((groups, i) => {
+                    return (
+                        <MenuItem key={i} value={groups.group_name}>{groups.group_name}</MenuItem>
+                        
+                    )
+                    
+                })}
+                </Select>
+            </FormControl>
+        )
+    }
+
+    const handleSubmit = (e) => {
+        debugger;
+        e.preventDefault();
+        setParent({
+            ...parent,
+            street_address: parent.street_address,
+            city: parent.city,
+            state: parent.state,
+            zip_code: parent.zip_code,
+        })
+
+        childArray.map(child => {
+            if(child.name.length > 0){
+                parent.child.push(child);
+            }
+            
+        })
+
+
+    }
+
+    console.log(child1.age_group);
+    console.log('Parents child', parent.child);
 
     return (
         <div className={classes.root}>
         <Paper className={classes.paper} >
-        <div style={{textAlign: 'center'}}><p><h1>Create Your Profile</h1></p></div>
-            <form className={classes.form} noValidate onSubmit>
+        <div style={{textAlign: 'center'}}><h1>Create Your Profile</h1></div>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
                 <Grid container spacing={3} className={classes.grid}>
                     <Grid item xs={2}/>
                     <Grid item xs={3}>
@@ -160,8 +339,7 @@ export default function DaycareProfile() {
                     <Grid item xs={2}/>
                     {/* Child */}
                     <Grid item xs={2}/>
-                    <Grid item xs={4}>
-                    {/* DROPDOWN MENU OF AGE GROUPS */}
+                    <Grid item xs={3}>
                     <TextField
                     variant="outlined"
                     margin="normal"
@@ -170,34 +348,25 @@ export default function DaycareProfile() {
                     id="name"
                     label="Child Name"
                     name="name"
-                    value={child.name}
-                    onChange={handleChildChanges}
+                    value={child1.name}
+                    onChange={handleChild1Change}
                     autoComplete="name"
                     autoFocus
                     />
                     </Grid>
                     <Grid item xs={1}/>
+                    {/* DROPDOWN MENU OF AGE GROUPS */}
                     <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="age_group"
-                    label="Age Group"
-                    name="age_group"
-                    value={child.age_group}
-                    onChange={handleChildChanges}
-                    autoComplete="age_group"
-                    autoFocus
-                    />
+                    {selectAgeGroup1()}
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={1}/>
+                    <Grid item xs={2}>
                         <div style={{marginTop: '30px'}}>
                             <span onClick={() =>setOptions({...options, option1: true}) }>
                                 {options.option1 === true  ? <></>
-                                :  
-                                <AddBoxIcon className={classes.icon}/>
+                                : 
+                                <span><AddBoxIcon className={classes.icon}/><span style={{}}>Add Child</span></span>
+                                
                                 }
                             </span>
                         </div>
@@ -206,8 +375,7 @@ export default function DaycareProfile() {
                     <>
                     <Grid item xs={2}/>
                     {/* Child */}
-                    <Grid item xs={4}>
-                    {/* DROPDOWN MENU OF AGE GROUPS */}
+                    <Grid item xs={3}>
                     <TextField
                     variant="outlined"
                     margin="normal"
@@ -216,27 +384,15 @@ export default function DaycareProfile() {
                     id="name"
                     label="Child Name"
                     name="name"
-                    value={child.name}
-                    onChange={handleChildChanges}
+                    value={child2.name}
+                    onChange={handleChild2Change}
                     autoComplete="name"
                     autoFocus
                     />
                     </Grid>
                     <Grid item xs={1}/>
                     <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="teacher_child_ratio"
-                    label="Age Group"
-                    name="teacher_child_ratio"
-                    
-                    // onChange={handleChanges}
-                    autoComplete="teacher_child_ratio"
-                    autoFocus
-                    />
+                    {selectAgeGroup2()}
                     </Grid>
                     <Grid item xs={1}>
                         <div style={{marginTop: '30px'}}>
@@ -255,8 +411,9 @@ export default function DaycareProfile() {
                     {options.option2 === true ? 
                     <>
                     <Grid item xs={2}/>
+                    <Grid item xs={2}/>
                     {/* Child */}
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
                     <TextField
                     variant="outlined"
@@ -266,27 +423,15 @@ export default function DaycareProfile() {
                     id="name"
                     label="Child Name"
                     name="name"
-                    value={child.name}
-                    onChange={handleChildChanges}
+                    value={child3.name}
+                    onChange={handleChild3Change}
                     autoComplete="name"
                     autoFocus
                     />
                     </Grid>
                     <Grid item xs={1}/>
                     <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="teacher_child_ratio"
-                    label="Age Group"
-                    name="teacher_child_ratio"
-                    
-                    // onChange={handleChanges}
-                    autoComplete="teacher_child_ratio"
-                    autoFocus
-                    />
+                    {selectAgeGroup3()}
                     </Grid>
                     <Grid item xs={1}>
                         <div style={{marginTop: '30px'}}>
@@ -305,8 +450,9 @@ export default function DaycareProfile() {
                     {options.option3 === true ? 
                     <>
                     <Grid item xs={2}/>
+                    <Grid item xs={2}/>
                     {/* Child */}
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
                     <TextField
                     variant="outlined"
@@ -316,27 +462,15 @@ export default function DaycareProfile() {
                     id="name"
                     label="Child Name"
                     name="name"
-                    value={child.name}
-                    onChange={handleChildChanges}
+                    value={child4.name}
+                    onChange={handleChild4Change}
                     autoComplete="name"
                     autoFocus
                     />
                     </Grid>
                     <Grid item xs={1}/>
                     <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="teacher_child_ratio"
-                    label="Age Group"
-                    name="teacher_child_ratio"
-                    
-                    // onChange={handleChanges}
-                    autoComplete="teacher_child_ratio"
-                    autoFocus
-                    />
+                    {selectAgeGroup4()}
                     </Grid>
                     </>
                     :
