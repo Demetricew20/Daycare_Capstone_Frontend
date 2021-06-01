@@ -70,7 +70,6 @@ export default function Register() {
     is_daycare: user.is_daycare,
     }
     try{
-        debugger;
         const response = await ServiceLayer.registerUser(data);
         console.log(response);
         setUser({
@@ -82,21 +81,14 @@ export default function Register() {
         is_daycare: data.is_daycare,
         });
 
-    //   if(response.data.token !== null){
-    //     window.location.href='/login';
-    //   }
+      if(response.data.token !== null){
+        window.location.href='/login';
+      }
     } catch(ex){
       console.log('Error in API call', ex.response.data);
     }
   }
 
-  console.log(user);
-
-//   const onChangePhoneNumber = (e) => {
-//     setUser({
-//       ...user, phoneNumber: e.target.value
-//     })
-//   }
 
   const handleChanges = (e) => {
     setUser({
@@ -104,37 +96,6 @@ export default function Register() {
         [e.target.name]: e.target.value
     })
   }
-
-  const onChangeFirstName = (e) => {
-    setUser({
-      ...user, firstName: e.target.value
-    })
-  }
-
-  const onChangeLastName = (e) => {
-    setUser({
-      ...user, lastName: e.target.value
-    })
-  }
-
-  const onChangeEmail = (e) => {
-    setUser({
-      ...user, email: e.target.value
-    })
-  }
-
-  const onChangeUsername = (e) => {
-    setUser({
-      ...user, username: e.target.value
-    })
-  }
-
-  const onChangePassword = (e) => {
-    setUser({
-      ...user, password: e.target.value
-    })
-  }
-  
 
   const onChangeIsDaycare = (e) => {
     setUser({

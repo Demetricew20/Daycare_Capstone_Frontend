@@ -12,7 +12,12 @@ class ServiceLayer {
     }
 
     // Daycares
-
+    getAllDaycare(){
+        return axiosInstance.get('daycares/');
+    }
+    createDaycare(data){
+        return axiosInstance.post('daycares/', data)
+    }
     //Age groups
     getAllAgeGroups(){
         return axiosInstance.get('age_groups/');

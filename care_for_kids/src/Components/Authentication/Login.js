@@ -66,7 +66,6 @@ const useStyles = makeStyles((theme) => ({
         password: userLogin.password
       }
       try{
-          debugger;
         const response = await ServiceLayer.loginUser(data);
         console.log(response);
   
@@ -80,7 +79,12 @@ const useStyles = makeStyles((theme) => ({
           const jwt = localStorage.getItem('token');
           const userInfo = jwtDecode(jwt);
           setUser(userInfo);
-          //window.location.href='/productList';
+          if(userInfo.is_daycare){
+            window.location.href='/create-daycare-profile';
+          }
+          else{
+            window.location.href='/create-parent-profile';
+          }
         }
         else{
           console.log('User token is undefined.')
@@ -103,6 +107,8 @@ const useStyles = makeStyles((theme) => ({
         ...userLogin, password: e.target.value
       })
     }
+
+    console.log(user);
   
     return (
       <Grid container component="main" className={classes.root}>

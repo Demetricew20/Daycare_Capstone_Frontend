@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom'
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,11 +16,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import HistoryIcon from '@material-ui/icons/History';
-import ListIcon from '@material-ui/icons/List';
-import InfoIcon from '@material-ui/icons/Info';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 // import Controls from '../controls/Controls';
 import Link from '@material-ui/core/Link';
 import ServiceLayer from '../../Service/serviceLayer';
@@ -108,70 +103,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NavigationBar() {
 
-  const jwt = localStorage.getItem('token');
-
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const [cartCount, setCartCount] = useState(0);
   const [mailCount, setMailCount] = useState(0);
   const [notificationCount, setNotificationCount] = useState(0);
-  const [sellerTitleDisabled, setSellerTitleDisabled] = useState(true);
-  const [buyerTitleDisabled, setBuyerTitleDisabled] = useState(true);
+
   const [initialLogin, setInitialLogin] = useState(true)
 
   useEffect(() => {
-    if (jwt) {
-      const user = jwtDecode(jwt);
-      getCartItems();
-      getMailItems();
-      getNotificationItems();
-      setInitialLogin(false)
-      if (user.isSupplier === "True") {
-        setSellerTitleDisabled(false);
-      } else {
-        setBuyerTitleDisabled(false);
-      }
-    } else {
-      setInitialLogin(true)
-    }
-  },[jwt])
+  },[])
 
-
-  async function getCartItems(e){
-    try{
-        const response = await ServiceLayer.getItemCount();
-        setCartCount(response.data[0].count);
-    }
-    catch(e){
-        console.log('GetCartItems API call unsuccessful', e)
-    }
-  }
-
-  async function getMailItems() {
-    try{
-      // ** Add code once Mail endpoints have been created
-      //const response = await ServiceLayer.getMailCount();
-      //setMailCount(response.data[0].count)
-      setMailCount(0)
-    } 
-    catch(e){
-      console.log('GetMailCount API call unsuccessful', e)
-    }
-  }
-
-  async function getNotificationItems() {
-    try{
-      // ** Add code once Notification endpoints have been created
-      //const response = await ServiceLayer.getNotificationCount();
-      //setMailCount(response.data[0].count)
-      setNotificationCount(0)
-    } 
-    catch(e){
-      console.log('GetMailCount API call unsuccessful', e)
-    }
-  }
-    
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -261,10 +203,6 @@ export default function NavigationBar() {
           </Typography>
         </Link>      
         }
-          <div className={classes.role}>
-          {buyerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Buyer </Typography> }
-          {sellerTitleDisabled === false && <Typography className={classes.title} variant="h6" noWrap> Seller </Typography> }  
-          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {/* NEED TO ADD LINKS */}
