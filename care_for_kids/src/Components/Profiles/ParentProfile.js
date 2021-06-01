@@ -130,6 +130,8 @@ export default function DaycareProfile() {
         })
     }
 
+    // **** NEEDS TO BE REFACTORED *** \\\\
+
     const handleChild1Change = (e) => {
         setChild1({
             ...child1,
@@ -154,6 +156,7 @@ export default function DaycareProfile() {
             [e.target.name]: e.target.value
         })
     }
+    // **** NEEDS TO BE REFACTORED *** \\\\
 
     const selectAgeGroup1 = () => {
         
@@ -254,19 +257,13 @@ export default function DaycareProfile() {
             state: parent.state,
             zip_code: parent.zip_code,
         })
-
         childArray.map(child => {
             if(child.name.length > 0){
                 parent.child.push(child);
             }
             
         })
-
-
     }
-
-    console.log(child1.age_group);
-    console.log('Parents child', parent.child);
 
     return (
         <div className={classes.root}>
@@ -359,13 +356,12 @@ export default function DaycareProfile() {
                     <Grid item xs={3}>
                     {selectAgeGroup1()}
                     </Grid>
-                    <Grid item xs={1}/>
                     <Grid item xs={2}>
                         <div style={{marginTop: '30px'}}>
                             <span onClick={() =>setOptions({...options, option1: true}) }>
                                 {options.option1 === true  ? <></>
                                 : 
-                                <span><AddBoxIcon className={classes.icon}/><span style={{}}>Add Child</span></span>
+                                <span style={{display: 'flex'}}><AddBoxIcon className={classes.icon}/><span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span></span>
                                 
                                 }
                             </span>
@@ -394,12 +390,13 @@ export default function DaycareProfile() {
                     <Grid item xs={3}>
                     {selectAgeGroup2()}
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2}>
                         <div style={{marginTop: '30px'}}>
                             <span onClick={() =>setOptions({...options, option2: true}) }>
                                 {options.option2 === true  ? <></>
-                                :  
-                                <AddBoxIcon color='secondary' className={classes.icon}  />
+                                : 
+                                <span style={{display: 'flex'}}><AddBoxIcon className={classes.icon}/><span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span></span>
+                                
                                 }
                             </span>
                         </div>
@@ -410,7 +407,6 @@ export default function DaycareProfile() {
                     }
                     {options.option2 === true ? 
                     <>
-                    <Grid item xs={2}/>
                     <Grid item xs={2}/>
                     {/* Child */}
                     <Grid item xs={3}>
@@ -433,12 +429,12 @@ export default function DaycareProfile() {
                     <Grid item xs={3}>
                     {selectAgeGroup3()}
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2}>
                         <div style={{marginTop: '30px'}}>
                             <span onClick={() =>setOptions({...options, option3: true}) }>
                                 {options.option3 === true  ? <></>
                                 :  
-                                <AddBoxIcon color='secondary' className={classes.icon} />
+                                <span style={{display: 'flex'}}><AddBoxIcon className={classes.icon}/><span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span></span>
                                 }
                             </span>
                         </div>
@@ -449,7 +445,7 @@ export default function DaycareProfile() {
                     }
                     {options.option3 === true ? 
                     <>
-                    <Grid item xs={2}/>
+                    <Grid item xs={1}/>
                     <Grid item xs={2}/>
                     {/* Child */}
                     <Grid item xs={3}>
