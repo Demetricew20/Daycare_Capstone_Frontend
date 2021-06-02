@@ -28,9 +28,22 @@ class ServiceLayer {
     }
 
     //Child
+    getAllChildren(){
+        return axiosInstance.get('child/');
+    }
+
+    createChild(data){
+        return axiosInstance.post('child/', data)
+    }
 
     //Parent
+    getAllParents(){
+        return axiosInstance.get('parent/');
+    }
 
+    createParent(data){
+        return axiosInstance.post('parent/', data);
+    }
     //Reviews
 
 }

@@ -111,7 +111,12 @@ export default function NavigationBar() {
 
   const [initialLogin, setInitialLogin] = useState(true)
 
+  const jwt = localStorage.getItem('token')
+
   useEffect(() => {
+    if(jwt){
+      setInitialLogin(false);
+    }
   },[])
 
   const isMenuOpen = Boolean(anchorEl);
@@ -170,9 +175,6 @@ export default function NavigationBar() {
             <MenuItem onClick={handleProfileMenuOpen}>
             <p style={{marginLeft: '5px'}} >About Us</p>
           </MenuItem>
-          <MenuItem >
-            <p style={{textAlign:"center"}} >Login</p>
-          </MenuItem>
       </>
       : 
       
@@ -188,26 +190,15 @@ export default function NavigationBar() {
       <AppBar position="static" className={classes.navbar}>
         {/* CREATE AN INITIAL LOGIN VIEW */}
         <Toolbar>
-          {initialLogin ? 
-          <Link component={RouterLink} to={'/login'} underline="none" className={classes.navlink}>
+          <Link component={RouterLink} to={initialLogin ? '/login' : 'create-daycare-profile'} underline="none" className={classes.navlink}>
             <Typography className={classes.title} paragraph={false} align="center" noWrap>
-              {/* <span><strong style={{color: '#C64D4E'}} >Care</strong><strong style={{color: 'blue'}}> 4</strong><strong style={{color: 'yellow'}}> Kids</strong></span> */}
               <img className={classes.image} src={Logo} alt="Logo"/>
             </Typography>
           </Link>
-        :
-          <Link component={RouterLink} to={''} underline="none" className={classes.navlink}>
-          <Typography className={classes.title} paragraph={false} align="center" noWrap>
-            {/* <span><strong style={{color: '#C64D4E'}} >Care</strong><strong style={{color: 'blue'}}> 4</strong><strong style={{color: 'yellow'}}> Kids</strong></span> */}
-            <img className={classes.image} src={Logo} alt="Logo"/>
-          </Typography>
-        </Link>      
-        }
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {/* NEED TO ADD LINKS */}
           {initialLogin === true && <Typography className={classes.links} variant="h5" noWrap> About Us </Typography> }
-          {initialLogin === true && <Typography className={classes.links} variant="h5" noWrap> Login </Typography> }
 
           {/* Icons with Badges */}
             {initialLogin === false && <IconButton aria-label="show new mails" color="inherit">

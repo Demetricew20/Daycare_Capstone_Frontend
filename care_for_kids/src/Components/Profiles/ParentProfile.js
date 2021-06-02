@@ -11,6 +11,7 @@ import Input from '@material-ui/core/Input';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Select from '@material-ui/core/Select';
 import serviceLayer from '../../Service/serviceLayer';
+import jwtDecode from 'jwt-decode';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -69,41 +70,41 @@ const useStyles = makeStyles((theme) => ({
 export default function DaycareProfile() {
     const classes = useStyles();
 
-    useEffect(() => {
-        getAgeGroups();
-    }, [])
+    const [user, setUser] = useState();
 
     const [parent, setParent] = useState({
         street_address: '',
         city: '',
         state: '',
         zip_code: '',
-        child: [],
-        availability: true,
-        age_groups: []
+        children: [],
     });
     const [child1, setChild1] = useState({
+        id: '',
         name: '',
-        age_group: null,
+        age_group: '',
+        url: '',
         added: false
     })
     const [child2, setChild2] = useState({
+        id: '',
         name: '',
-        age_group: null,
+        age_group: '',
+        url: '',
         added: false
     })
     const [child3, setChild3] = useState({
         name: '',
-        age_group: null,
+        age_group: '',
+        url: '',
         added: false
     })
     const [child4, setChild4] = useState({
         name: '',
-        age_group: null,
+        age_group: '',
+        url: '',
         added: false
     })
-
-    let childArray = [child1, child2, child3, child4]
 
     const [ageGroups, setAgeGroups] = useState([])
     const [options, setOptions] = useState({
@@ -112,10 +113,35 @@ export default function DaycareProfile() {
         option3: false
     })
 
+    const jwt = localStorage.getItem('token');
+
+    useEffect(() => {
+        getAgeGroups();
+        if(jwt){
+            const userInfo = jwtDecode(jwt);
+            setUser(userInfo);
+        }
+    }, [jwt])
+
+    let childArray = [child1, child2, child3, child4]
+    childArray.map(child => {
+        if (child.age_group === "Infant (Younger than 12 months)"){
+            child.url = "http://127.0.0.1:8000/age_groups/1/"
+        }
+        else if (child.age_group === "Young Toddler (1-2 years)"){
+            child.url = "http://127.0.0.1:8000/age_groups/2/"
+        }
+        else if (child.age_group === "Older Toddler (2-3 years)"){
+            child.url = 'http://127.0.0.1:8000/age_groups/3/'
+        }
+        else if (child.age_group === "Preschooler (3-5 years)"){
+            child.url = 'http://127.0.0.1:8000/age_groups/4/'
+        }
+    })
+
     async function getAgeGroups(){
         try{
             const response = await serviceLayer.getAllAgeGroups();
-            console.log(response.data);
             setAgeGroups(response.data);
         }
         catch(err){
@@ -247,29 +273,102 @@ export default function DaycareProfile() {
         )
     }
 
-    const handleSubmit = (e) => {
+
+
+    async function handleSubmit(e) {
         debugger;
         e.preventDefault();
-        setParent({
-            ...parent,
+
+        if(child1.age_group){
+            const data = {
+                name: child1.name,
+                age_group: child1.url
+            }
+            try{
+                let response = await serviceLayer.createChild(data);
+                console.log('child1', response);
+                child1.url = `http://127.0.0.1:8000/child/${response.data.id}/`;
+            }
+            catch(err){
+                console.log('child1', err);
+            }
+        }
+        if(child2.age_group){
+            const data = {
+                name: child2.name,
+                age_group: child2.url
+            }
+            try{
+                let response = await serviceLayer.createChild(data);
+                console.log('child2', response);
+                child2.url = `http://127.0.0.1:8000/child/${response.data.id}/`;
+            }
+            catch(err){
+                console.log('child2', err);
+                
+            }
+        }
+        if(child3.age_group){
+            const data = {
+                name: child3.name,
+                age_group: child3.url
+            }
+                
+            try{
+                let response = await serviceLayer.createChild(data);
+                console.log('child3', response);
+                child3.url = `http://127.0.0.1:8000/child/${response.data.id}/`;
+            }
+            catch(err){
+                console.log('child3', err);
+            }
+        }
+        if(child4.age_group){
+            const data = {
+                name: child4.name,
+                age_group: child4.url
+            }
+            try{
+                let response = await serviceLayer.createChild(data);
+                console.log('child4', response);
+                child4.url = `http://127.0.0.1:8000/child/${response.data.id}/`;
+            }
+            catch(err){
+                console.log('child4', err);
+            }
+        }
+        
+        
+        
+        childArray.forEach(child => {
+            if(child.age_group){
+                parent.children.push(child.url);
+            }
+        })
+
+        const parentData = {
+            user: user.user_id,
             street_address: parent.street_address,
             city: parent.city,
             state: parent.state,
             zip_code: parent.zip_code,
-        })
-        childArray.map(child => {
-            if(child.name.length > 0){
-                parent.child.push(child);
-            }
-            
-        })
+            child: parent.children,
+        }
+        try{
+            let response = await serviceLayer.createParent(parentData);
+            console.log(response);
+        }
+        catch(err){
+            console.log(err);
+        }
+
     }
 
     return (
         <div className={classes.root}>
         <Paper className={classes.paper} >
         <div style={{textAlign: 'center'}}><h1>Create Your Profile</h1></div>
-            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            <form className={classes.form} noValidate>
                 <Grid container spacing={3} className={classes.grid}>
                     <Grid item xs={2}/>
                     <Grid item xs={3}>
@@ -474,7 +573,7 @@ export default function DaycareProfile() {
                     }
                     <Grid item xs={4} />
                     <Grid item xs={4}>
-                        <Button fullWidth variant="contained" color="primary" type="submit" className={classes.submit}>Submit</Button>
+                        <Button fullWidth variant="contained" color="primary" type="submit" onClick={handleSubmit} className={classes.submit}>Submit</Button>
                     </Grid>
                     <Grid item xs={4} />
                     <Grid item xs={1} />

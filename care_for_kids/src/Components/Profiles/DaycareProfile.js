@@ -12,6 +12,7 @@ import serviceLayer from '../../Service/serviceLayer';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
+import jwtDecode from 'jwt-decode';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DaycareProfile() {
     const classes = useStyles();
+    const [user, setUser] = useState();
     const [daycare, setDaycare] = useState({
         name: '',
         street_address: '',
@@ -96,8 +98,14 @@ export default function DaycareProfile() {
 
     const [ageGroups, setAgeGroups] = useState([])
 
+    const jwt = localStorage.getItem('token');
+
     useEffect(() => {
         getAgeGroups();
+        if(jwt){
+            const userInfo = jwtDecode(jwt);
+            setUser(userInfo);
+        }
     }, [])
 
     async function getAgeGroups(){
@@ -265,6 +273,7 @@ export default function DaycareProfile() {
 
         try{
             const data = {
+                user: user.user_id,
                 name: daycare.name,
                 street_address: daycare.street_address,
                 city: daycare.city,
@@ -291,14 +300,10 @@ export default function DaycareProfile() {
         }
     }
 
-    console.log(daycare.age_groups)
-
-
-
     return (
         <div className={classes.root}>
         <Paper className={classes.paper} >
-        <div style={{textAlign: 'center'}}><p><h1>Daycare Profile</h1></p></div>
+        <div style={{textAlign: 'center'}}><h1>Daycare Profile</h1></div>
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
                 <Grid container spacing={3} className={classes.grid}>
                     <Grid item xs={4}/>
