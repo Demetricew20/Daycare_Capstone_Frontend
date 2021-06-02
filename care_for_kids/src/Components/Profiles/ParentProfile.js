@@ -273,8 +273,6 @@ export default function DaycareProfile() {
         )
     }
 
-
-
     async function handleSubmit(e) {
         debugger;
         e.preventDefault();
@@ -360,9 +358,6 @@ export default function DaycareProfile() {
         catch(err){
             console.log(err);
         }
-
-        
-
     }
 
     return (

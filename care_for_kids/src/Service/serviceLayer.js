@@ -16,7 +16,11 @@ class ServiceLayer {
         return axiosInstance.get('daycares/');
     }
     createDaycare(data){
-        return axiosInstance.post('daycares/', data)
+        return axiosInstance.post('daycares/', data);
+    }
+
+    getDaycareByUserId(id){
+        return axiosInstance.get(`daycares/${id}`);
     }
     //Age groups
     getAllAgeGroups(){
@@ -39,6 +43,10 @@ class ServiceLayer {
     //Parent
     getAllParents(){
         return axiosInstance.get('parent/');
+    }
+
+    getParentByUserId(id){
+        return axiosInstance.get(`parent${id}`)
     }
 
     createParent(data){
