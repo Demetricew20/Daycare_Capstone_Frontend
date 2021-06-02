@@ -294,6 +294,7 @@ export default function DaycareProfile() {
             }
             let response = await serviceLayer.createDaycare(data);
             console.log(response);
+            window.location.href = '/view-daycare-profile';
         }
         catch(err){
             console.log('Error creating daycare profile', err)

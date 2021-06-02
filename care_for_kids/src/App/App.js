@@ -9,6 +9,8 @@ import { CssBaseline } from '@material-ui/core';
 import NavigationBar from '../Components/NavBar/NavigationBar';
 import DaycareProfile from '../Components/Profiles/DaycareProfile';
 import ParentProfile from '../Components/Profiles/ParentProfile';
+import ViewParentProfile from '../Components/Profiles/ViewParentProfile';
+import ViewDaycareProfile from '../Components/Profiles/ViewDaycareProfile';
 
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
       <Route path='/login' component={Login} />
       <Route path='/create-daycare-profile' component={DaycareProfile} />
       <Route path='/create-parent-profile' component={ParentProfile} />
+      <Route path='/view-parent-profile' component={ViewParentProfile} />
+      <Route path='/view-daycare-profile' component={ViewDaycareProfile} />
     </Switch>
     </Paper>
   );

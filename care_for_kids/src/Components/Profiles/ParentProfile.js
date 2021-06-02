@@ -338,8 +338,6 @@ export default function DaycareProfile() {
             }
         }
         
-        
-        
         childArray.forEach(child => {
             if(child.age_group){
                 parent.children.push(child.url);
@@ -357,10 +355,13 @@ export default function DaycareProfile() {
         try{
             let response = await serviceLayer.createParent(parentData);
             console.log(response);
+            window.location.href = '/view-parent-profile';
         }
         catch(err){
             console.log(err);
         }
+
+        
 
     }
 
