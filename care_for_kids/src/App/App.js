@@ -21,7 +21,7 @@ function App() {
     const jwt = localStorage.getItem('token')
     try{
       const user = jwtDecode(jwt);
-      this.setState({user: user})
+      setUser(user);
     } catch {}
   }
 

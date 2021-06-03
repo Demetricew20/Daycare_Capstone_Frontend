@@ -66,10 +66,6 @@ const useStyles = makeStyles((theme) => ({
       getDaycares();
     }, [])
 
-    console.log(parentData);
-
-
-
     async function getParents(){
       try{
         const response = await ServiceLayer.getAllParents();
@@ -101,8 +97,7 @@ const useStyles = makeStyles((theme) => ({
 
       try{
         const response = await ServiceLayer.loginUser(data);
-  
-        if(response.data.token !== null){
+
           let token = response.data.access;
           window.localStorage.setItem('token', token)
           setUserLogin({
@@ -113,32 +108,35 @@ const useStyles = makeStyles((theme) => ({
           const userInfo = jwtDecode(jwt);
           userData = userInfo;
           setUser(userInfo);
+
+          let activeParent;
+          let activeDaycare;
+
           parentData.forEach(p => {
-            if(userInfo.user_id === p.user){
-              return window.location.href='/view-parent-profile';
+            if (p.user === userInfo.user_id && !userInfo.is_daycare){
+              activeParent = true;
+              return window.location.href ='/view-parent-profile';
             }
           })
 
           daycareData.forEach(d => {
-            if(userInfo.user_id === d.user){
-              return window.location.href='/view-daycare-profile';
+            if (d.user === userInfo.user_id && userInfo.is_daycare){
+              activeDaycare = true;
+              return window.location.href = '/view-daycare-profile';
             }
           })
-        }
-        else{
-          console.log('no user found!')
-        }
+
+          if(!activeDaycare && userInfo.is_daycare){
+            return window.location.href = '/create-daycare-profile';
+          }
+          else if (!activeParent && !userInfo.is_daycare){
+            return window.location.href = '/create-parent-profile';
+          }
+
       } catch(ex){
         console.log('** Ensure your server is running!! **')
         console.log('Error in API call', ex);
         alert("Incorrect Username or Password. Try again.")
-      }
-      debugger;
-      if(userData.is_daycare){
-        return window.location.href='/create-daycare-profile'
-      }
-      else{
-        return window.location.href='/create-parent-profile'
       }
     }
   
