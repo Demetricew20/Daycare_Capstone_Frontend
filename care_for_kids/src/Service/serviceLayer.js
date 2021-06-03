@@ -12,7 +12,7 @@ class ServiceLayer {
     }
 
     // Daycares
-    getAllDaycare(){
+    getAllDaycares(){
         return axiosInstance.get('daycares/');
     }
     createDaycare(data){
@@ -46,7 +46,7 @@ class ServiceLayer {
     }
 
     getParentByUserId(id){
-        return axiosInstance.get(`parent${id}`)
+        return axiosInstance.get(`parent/${id}`)
     }
 
     createParent(data){

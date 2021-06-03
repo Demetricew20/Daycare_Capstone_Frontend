@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -58,6 +58,37 @@ const useStyles = makeStyles((theme) => ({
       password: '',
     });
     const [user, setUser] = useState();
+    const [parentData, setParentData] = useState([]);
+    const [daycareData, setDaycareData] = useState([]);
+
+    useEffect(() => {
+      getParents();
+      getDaycares();
+    }, [])
+
+    console.log(parentData);
+
+
+
+    async function getParents(){
+      try{
+        const response = await ServiceLayer.getAllParents();
+        setParentData(response.data);
+      }
+      catch(err){
+        console.log('Cannot retrieve parent data', err)
+      }
+    }
+
+    async function getDaycares(){
+      try{
+        const response = await ServiceLayer.getAllDaycares();
+        setDaycareData(response.data);
+      }
+      catch(err){
+        console.log('Cannot retrieve daycare data', err)
+      }
+    }
   
     async function handleSubmit(event){
       event.preventDefault();
@@ -65,9 +96,11 @@ const useStyles = makeStyles((theme) => ({
         username: userLogin.username,
         password: userLogin.password
       }
+
+      let userData;
+
       try{
         const response = await ServiceLayer.loginUser(data);
-        console.log(response);
   
         if(response.data.token !== null){
           let token = response.data.access;
@@ -78,21 +111,34 @@ const useStyles = makeStyles((theme) => ({
           });
           const jwt = localStorage.getItem('token');
           const userInfo = jwtDecode(jwt);
+          userData = userInfo;
           setUser(userInfo);
-          if(userInfo.is_daycare){
-            window.location.href='/create-daycare-profile';
-          }
-          else{
-            window.location.href='/create-parent-profile';
-          }
+          parentData.forEach(p => {
+            if(userInfo.user_id === p.user){
+              return window.location.href='/view-parent-profile';
+            }
+          })
+
+          daycareData.forEach(d => {
+            if(userInfo.user_id === d.user){
+              return window.location.href='/view-daycare-profile';
+            }
+          })
         }
         else{
-          console.log('User token is undefined.')
+          console.log('no user found!')
         }
       } catch(ex){
         console.log('** Ensure your server is running!! **')
         console.log('Error in API call', ex);
         alert("Incorrect Username or Password. Try again.")
+      }
+      debugger;
+      if(userData.is_daycare){
+        return window.location.href='/create-daycare-profile'
+      }
+      else{
+        return window.location.href='/create-parent-profile'
       }
     }
   
@@ -107,8 +153,6 @@ const useStyles = makeStyles((theme) => ({
         ...userLogin, password: e.target.value
       })
     }
-
-    console.log(user);
   
     return (
       <Grid container component="main" className={classes.root}>
