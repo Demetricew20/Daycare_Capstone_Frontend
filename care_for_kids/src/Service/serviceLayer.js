@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosInstance from './axios';
 
 
@@ -9,6 +10,14 @@ class ServiceLayer {
 
     loginUser(data){
         return axiosInstance.post('accounts/login/', data);
+    }
+
+    getAllUsers(){
+        return axiosInstance.get('accounts/users/');
+    }
+
+    getUserById(id){
+        return axiosInstance.get(`accounts/users/${id}/`)
     }
 
     // Daycares
@@ -38,6 +47,10 @@ class ServiceLayer {
 
     createChild(data){
         return axiosInstance.post('child/', data)
+    }
+
+    getChild(url){
+        return axios.get(url);
     }
 
     //Parent

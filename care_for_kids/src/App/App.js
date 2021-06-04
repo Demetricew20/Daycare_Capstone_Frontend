@@ -11,14 +11,19 @@ import DaycareProfile from '../Components/Profiles/DaycareProfile';
 import ParentProfile from '../Components/Profiles/ParentProfile';
 import ViewParentProfile from '../Components/Profiles/ViewParentProfile';
 import ViewDaycareProfile from '../Components/Profiles/ViewDaycareProfile';
+import serviceLayer from '../Service/serviceLayer';
 
 
 function App() {
 
   const [user, setUser] = useState();
+  const [parent, setParent] = useState();
+  const [allParents, setAllParents] = useState([])
+  const [daycare, setDaycare] = useState();
+  const [allDaycares, setAllDaycares] = useState([])
 
+  const jwt = localStorage.getItem('token')
   function getToken() {
-    const jwt = localStorage.getItem('token')
     try{
       const user = jwtDecode(jwt);
       setUser(user);
@@ -27,9 +32,28 @@ function App() {
 
   useEffect(() => {
     getToken();
-  }, [])
+    if(jwt){
+      getParents();
+      allParents.forEach(p => {
+        if (user.user_id === p.user){
+          setParent(p);
+        }
+      })
+    }
 
+  }, [])
   
+  async function getParents(){
+    try {
+      const response = await serviceLayer.getAllParents();
+      setAllParents(response.data);
+    }
+    catch(err){
+      console.log('APP', err);
+    }
+  }
+
+
   return (
     <Paper>
     <CssBaseline />
@@ -39,7 +63,7 @@ function App() {
       <Route path='/login' component={Login} />
       <Route path='/create-daycare-profile' component={DaycareProfile} />
       <Route path='/create-parent-profile' component={ParentProfile} />
-      <Route path='/view-parent-profile' component={ViewParentProfile} />
+      <Route path='/view-parent-profile' user={user} parent={parent} component={ViewParentProfile} />
       <Route path='/view-daycare-profile' component={ViewDaycareProfile} />
     </Switch>
     </Paper>

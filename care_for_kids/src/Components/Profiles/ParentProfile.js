@@ -12,6 +12,8 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import Select from '@material-ui/core/Select';
 import serviceLayer from '../../Service/serviceLayer';
 import jwtDecode from 'jwt-decode';
+import ViewParentProfile from './ViewParentProfile';
+import { Redirect, useHistory, useLocation } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -67,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     }));
 
 
-export default function DaycareProfile() {
+export default function ParentProfile(props) {
     const classes = useStyles();
 
     const [user, setUser] = useState();
@@ -114,6 +116,15 @@ export default function DaycareProfile() {
     })
 
     const jwt = localStorage.getItem('token');
+    const history = useHistory();
+
+    const viewProfile = (parentInfo, id) => {
+        history.push({
+          pathname: '/view-parent-profile',
+          search: `?query=${id}`,
+          state: {parent: parentInfo, parentId: id}
+        })
+    }
 
     useEffect(() => {
         getAgeGroups();
@@ -121,7 +132,7 @@ export default function DaycareProfile() {
             const userInfo = jwtDecode(jwt);
             setUser(userInfo);
         }
-    }, [jwt])
+    }, [])
 
     let childArray = [child1, child2, child3, child4]
     childArray.map(child => {
@@ -274,7 +285,7 @@ export default function DaycareProfile() {
     }
 
     async function handleSubmit(e) {
-        debugger;
+        
         e.preventDefault();
 
         if(child1.age_group){
@@ -353,11 +364,13 @@ export default function DaycareProfile() {
         try{
             let response = await serviceLayer.createParent(parentData);
             console.log(response);
-            window.location.href = '/view-parent-profile';
+            viewProfile(response.data, response.data.id);
         }
         catch(err){
             console.log(err);
         }
+
+
     }
 
     return (
