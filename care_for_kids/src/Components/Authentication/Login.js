@@ -118,7 +118,6 @@ const useStyles = makeStyles((theme) => ({
               return window.location.href ='/view-parent-profile';
             }
           })
-
           daycareData.forEach(d => {
             if (d.user === userInfo.user_id && userInfo.is_daycare){
               activeDaycare = true;
