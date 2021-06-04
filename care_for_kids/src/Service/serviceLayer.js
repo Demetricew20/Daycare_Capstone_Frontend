@@ -66,7 +66,9 @@ class ServiceLayer {
         return axiosInstance.post('parent/', data);
     }
     //Reviews
-
+    getAllReviews(){
+        return axiosInstance.get('daycare_review/')
+    }
 }
 
 
