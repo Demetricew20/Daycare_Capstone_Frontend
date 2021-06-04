@@ -3,27 +3,27 @@ import DaycareSearchTable from './DaycareSearchTable';
 import Image from '../../Assets/open_daycare.jpg';
 import serviceLayer from '../../Service/serviceLayer';
 
+
 const DaycareSearchPage = (props) => {
 
     const [allDaycares, setAllDaycares] = useState([]);
-    const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState();
     const [parent, setParent] = useState();
 
-    async function getReviews(){
-        try{
-            const response = await serviceLayer.getAllReviews();
-            setReviews(response.data);
-        }
-        catch(err){
-            console.log('SearchPage', err);
-        }
-    }
+    // async function getReviews(){
+    //     try{
+    //         const response = await serviceLayer.getAllReviews();
+    //         setReviews(response.data);
+    //     }
+    //     catch(err){
+    //         console.log('SearchPage', err);
+    //     }
+    // }
 
 
     useEffect(() => {
         setParent(props.parent);
         setAllDaycares(props.daycares);
-        getReviews();
     }, [props])
 
 
@@ -38,7 +38,15 @@ const DaycareSearchPage = (props) => {
             allDaycares.map((daycare, i) => {
                 return (
                     <div key={i} style={{marginTop: '2rem'}}>
-                    <DaycareSearchTable daycareName={daycare.name} description={daycare.description} cardImage={Image} />
+                    <DaycareSearchTable 
+                    daycareName={daycare.name} 
+                    description={daycare.description} 
+                    cardImage={Image} 
+                    rating={daycare.avg_rating} 
+                    street_address={daycare.street_address}
+                    city={daycare.city}
+                    state={daycare.state}
+                    />
                     </div>
                 )
             })

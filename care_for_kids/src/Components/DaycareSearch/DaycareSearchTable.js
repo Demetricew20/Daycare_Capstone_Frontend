@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,39 @@ export default function DaycareCards(props) {
     setExpanded(!expanded);
   };
 
+  const mapRating = () => {
+    return (
+        <div style={{display: 'flex', justifyContent: 'start'}}>
+            <span style={{position: 'relative', top: '10px'}}>Avg Parent Rating: </span>
+            {[...Array(5)].map((star, i) => {
+            const ratingValue = i + 1;
+
+            return (
+            <div key={i}>
+                {ratingValue <= props.rating ? 
+                    <span>
+                        <StarIcon
+                        style={{fill:'#F7C631'}}
+                        fontSize='large' 
+                        />
+                    </span>
+                :  
+                    <span>
+                        <StarIcon
+                        style={{fill:'#A5A8AC'}}
+                        fontSize='large' 
+                        />
+                    </span>
+                
+                }
+
+            </div>
+                );
+                })}
+        </div> 
+    )
+}
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -61,6 +95,13 @@ export default function DaycareCards(props) {
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
             {props.description}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+            <span>Address:</span>
+            <span style={{marginLeft: '15px'}}>{props.street_address} {props.city},&nbsp;{props.state}</span>
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+            {mapRating()}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
