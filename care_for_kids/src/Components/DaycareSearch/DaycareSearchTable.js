@@ -42,12 +42,51 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DaycareCards(props) {
-  const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
+    const classes = useStyles();
+    const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
+    const handleExpandClick = () => {
     setExpanded(!expanded);
-  };
+    };
+
+
+
+    const mapGroups = (daycare) => {
+        let ageGroupArray = [];
+        if(daycare){
+            daycare.age_groups.forEach(age => {
+                if (age === "http://127.0.0.1:8000/age_groups/1/"){
+                    age = "Infant (Younger than 12 months)"
+                    ageGroupArray.push({group: age, minCost: daycare.min_cost_infant, maxCost: daycare.max_cost_infant});
+                }
+                else if (age ==="http://127.0.0.1:8000/age_groups/2/" ){
+                    age = "Young Toddler (1-2 years)"
+                    ageGroupArray.push({group: age, minCost: daycare.min_cost_youth_T, maxCost: daycare.max_cost_youth_T });
+                    
+                }
+                else if (age === 'http://127.0.0.1:8000/age_groups/3/' ){
+                    age = "Older Toddler (2-3 years)"
+                    ageGroupArray.push({group: age, minCost: daycare.min_cost_old_T, maxCost: daycare.max_cost_old_T});
+                }
+                else if (age === 'http://127.0.0.1:8000/age_groups/4/'){
+                    age = "Preschooler (3-5 years)"
+                    ageGroupArray.push({group: age, minCost: daycare.min_cost_preschool, maxCost: daycare.max_cost_preschool});
+                }
+            })
+
+        }
+
+        return(
+            ageGroupArray.map((group, i) => ( 
+                <tr>
+                    <td >{group.group}</td>
+                    <td style={{textAlign: 'center'}}>{group.minCost}</td>
+                    <td style={{textAlign: 'center'}}>{group.maxCost}</td>
+                </tr>
+            ))
+        )
+
+    }
 
   const mapRating = () => {
     return (
@@ -98,7 +137,7 @@ export default function DaycareCards(props) {
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
             <span>Address:</span>
-            <span style={{marginLeft: '15px'}}>{props.street_address} {props.city},&nbsp;{props.state}</span>
+            <span style={{marginLeft: '7px'}}>{props.street_address} {props.city},&nbsp;{props.state}</span>
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
             {mapRating()}
@@ -124,16 +163,25 @@ export default function DaycareCards(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Summary:</Typography>
+          <Typography ><a style={{cursor: 'pointer'}} href='/daycare-details'>View Daycare</a></Typography>
           <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
+            {/* Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
             without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
             medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
             again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
+            minutes more. (Discard any mussels that don’t open.) */}
           </Typography>
           <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
+            <table style={{marginTop: '3rem'}}>
+                <tr>
+                    <th>Programs</th>
+                    <th>Estimated Min Cost</th>
+                    <th>Estimated Max Cost</th>
+                </tr>
+                <tbody >
+                    {mapGroups(props.daycare)}
+                </tbody>
+            </table>
           </Typography>
         </CardContent>
       </Collapse>

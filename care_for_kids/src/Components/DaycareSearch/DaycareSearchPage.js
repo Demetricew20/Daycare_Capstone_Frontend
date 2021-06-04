@@ -33,12 +33,12 @@ const DaycareSearchPage = (props) => {
 
     return (
         <div>
-            <h4>Hello</h4>
             {allDaycares && 
             allDaycares.map((daycare, i) => {
                 return (
                     <div key={i} style={{marginTop: '2rem'}}>
                     <DaycareSearchTable 
+                    daycare={daycare}
                     daycareName={daycare.name} 
                     description={daycare.description} 
                     cardImage={Image} 

@@ -149,32 +149,7 @@ export default function ViewParentProfile(props) {
             )
     }
     }
-
-    const mapMinCost = () => {
-        if (daycare){
-            return (
-                ageGroupArray.map((group, i) => ( 
-                    <div>
-                        <span>{group.minCost}</span>
-                    </div>
-
-                ))
-            )
-    }
-    }
-
-    const mapMaxCost = () => {
-        if (daycare){
-            return (
-                ageGroupArray.map((group, i) => ( 
-                    <div>
-                        <span>{group.maxCost}</span>
-                    </div>
-
-                ))
-            )
-    }
-    }
+    
     const classes = useStyles();
 
     return (
