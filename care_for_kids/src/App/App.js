@@ -12,6 +12,7 @@ import ParentProfile from '../Components/Profiles/ParentProfile';
 import ViewParentProfile from '../Components/Profiles/ViewParentProfile';
 import ViewDaycareProfile from '../Components/Profiles/ViewDaycareProfile';
 import serviceLayer from '../Service/serviceLayer';
+import DaycareSearchPage from '../Components/DaycareSearch/DaycareSearchPage';
 
 
 function App() {
@@ -34,14 +35,19 @@ function App() {
     getToken();
     if(jwt){
       getParents();
-      allParents.forEach(p => {
-        if (user.user_id === p.user){
-          setParent(p);
-        }
-      })
+      getDaycares();
     }
 
   }, [])
+
+  useEffect(() => {
+    allParents.forEach(p => {
+      if (user.user_id === p.user){
+        setParent(p);
+      }
+    })
+
+  }, [allParents])
   
   async function getParents(){
     try {
@@ -53,6 +59,15 @@ function App() {
     }
   }
 
+  async function getDaycares(){
+    try{
+      const response = await serviceLayer.getAllDaycares();
+      setAllDaycares(response.data);
+    }
+    catch(err){
+      console.log('APP', err);
+    }
+  }
 
   return (
     <Paper>
@@ -63,8 +78,9 @@ function App() {
       <Route path='/login' component={Login} />
       <Route path='/create-daycare-profile' component={DaycareProfile} />
       <Route path='/create-parent-profile' component={ParentProfile} />
-      <Route path='/view-parent-profile' user={user} parent={parent} component={ViewParentProfile} />
+      <Route path='/view-parent-profile' component={ViewParentProfile} />
       <Route path='/view-daycare-profile' component={ViewDaycareProfile} />
+      <Route path='/daycare-search'><DaycareSearchPage allParents={allParents} parent={parent} daycares={allDaycares} /> </Route>
     </Switch>
     </Paper>
   );

@@ -80,7 +80,6 @@ export default function ViewParentProfile(props) {
     const getDaycares = () => {
         serviceLayer.getAllDaycares()
         .then(response => {
-            console.log(response);
             setAllDaycares(response.data);
         })
         .catch(err => {
@@ -95,37 +94,6 @@ export default function ViewParentProfile(props) {
             }
         })
     }
-
-    // const getChildrenData = () => {
-    //     if (user){
-    //         if (children[0]){
-    //             serviceLayer.getChild(children[0])
-    //             .then(response => {
-    //                 setChild1(response.data);
-    //             })
-    //         }
-    //         if (children[1]){
-    //             serviceLayer.getChild(children[1])
-    //             .then(response => {
-    //                 setChild2(response.data);
-    //             })
-    //         }
-    //         if (children[2]){
-    //             serviceLayer.getChild(children[2])
-    //             .then(response => {
-    //                 setChild3(response.data);
-    //             })
-    //         }
-    //         if (children[3]){
-    //             serviceLayer.getChild(children[3])
-    //             .then(response => {
-    //                 setChild4(response.data);
-    //             })
-    //         }
-
-    //     }
-
-    // }
 
     useEffect(() => {
         getToken();
@@ -211,7 +179,7 @@ export default function ViewParentProfile(props) {
 
     return (
         <div className={classes.root}>
-            <div className={classes.pageTitle}><h1>My Profile</h1></div>
+            <div className={classes.pageTitle}><h1>Daycare Profile</h1></div>
             <Paper className={classes.paper}>
                 <div style={{textAlign: 'center'}}>
                     <AccountCircleIcon color="action" className={classes.avatar}/>
@@ -240,7 +208,7 @@ export default function ViewParentProfile(props) {
                 : <></>}
                 <div>
                 {user && daycare && options.switch ?
-                    <table>
+                    <table style={{marginTop: '3rem'}}>
                         <tr>
                             <th>Programs</th>
                             <th>Min Cost</th>
