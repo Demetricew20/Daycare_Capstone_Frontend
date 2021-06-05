@@ -78,7 +78,7 @@ export default function DaycareCards(props) {
 
         return(
             ageGroupArray.map((group, i) => ( 
-                <tr>
+                <tr key={i}>
                     <td >{group.group}</td>
                     <td style={{textAlign: 'center'}}>{group.minCost}</td>
                     <td style={{textAlign: 'center'}}>{group.maxCost}</td>
@@ -139,9 +139,7 @@ export default function DaycareCards(props) {
             <span>Address:</span>
             <span style={{marginLeft: '7px'}}>{props.street_address} {props.city},&nbsp;{props.state}</span>
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
             {mapRating()}
-        </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
@@ -164,7 +162,7 @@ export default function DaycareCards(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography ><a style={{cursor: 'pointer'}} href='/daycare-details'>View Daycare</a></Typography>
-          <Typography paragraph>
+          <Typography >
             {/* Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
             without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
             medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook

@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import DaycareSearchTable from './DaycareSearchTable';
 import Image from '../../Assets/open_daycare.jpg';
+import Map from '../../Components/Maps/Map'
 import serviceLayer from '../../Service/serviceLayer';
+import GoogleAPIWrapper from '../Maps/GoogleAPIWrapper';
+import {makeStyles} from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+
+    map: {
+        backgroundColor: 'red',
+        height: '600px',
+        width: '600px',
+        position: 'absolute',
+        top: '25%',
+        right: '0%'
+    }
+
+ }))
 
 const DaycareSearchPage = (props) => {
 
@@ -31,8 +46,12 @@ const DaycareSearchPage = (props) => {
     console.log(parent);
     console.log(reviews);
 
+    const classes = useStyles();
+
     return (
         <div>
+            <div>Search Bar</div>
+            <div className={classes.map}>{/* <GoogleAPIWrapper /> */}</div>
             {allDaycares && 
             allDaycares.map((daycare, i) => {
                 return (
@@ -51,6 +70,7 @@ const DaycareSearchPage = (props) => {
                 )
             })
             }
+            
         </div>
     )
 }
