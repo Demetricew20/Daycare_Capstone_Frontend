@@ -1,15 +1,13 @@
+import { useEffect, useState } from "react";
 import Geocode from "react-geocode";
+import serviceLayer from "../../Service/serviceLayer";
 
 const Map = () => {
-    // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
   Geocode.setApiKey("AIzaSyBEQFuqV4c2Tr69WoolL5i-qPfF1zNZKxQ");
-
-  // set response language. Defaults to english.
   Geocode.setLanguage("en");
-
-  // set response region. Its optional.
-  // A Geocoding request with region=es (Spain) will return the Spanish city.
   Geocode.setRegion("us");
+
+  const [allDaycares, setAllDaycares] = useState([]);
 
   // set location_type filter . Its optional.
   // google geocoder returns more that one address for given lat/lng.
@@ -22,28 +20,55 @@ const Map = () => {
   // Enable or disable logs. Its optional.
   Geocode.enableDebug();
 
-  // Get address from latitude & longitude.
-  // Geocode.fromLatLng("48.8583701", "2.2922926").then(
-  //   (response) => {
-  //     const address = response.results[0].formatted_address;
-  //     console.log(address);
-  //   },
-  //   (error) => {
-  //     console.error(error);
-  //   }
-  // );
+  const getAllDaycares = () => {
+      serviceLayer.getAllDaycares()
+      .then(response => {
+        setAllDaycares(response.data);
+      })
+      .catch(err => (console.log(err)))
+  }
 
-  // Get latitude & longitude from address.
-  Geocode.fromAddress("Eiffel Tower").then(
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
-    },
-    (error) => {
-      console.error(error);
-    }
-  );
 
+  useEffect(() => {
+    getAllDaycares();
+    getCoordinates();
+  }, [])
+
+  let addressArray = [];
+  let count = 0;
+
+
+  while (count <= 0){
+    allDaycares.forEach(daycare => {
+      let address = `${daycare.street_address}, ${daycare.city}, ${daycare.state}`;
+      addressArray.push(address);
+    })
+
+    count = 1;
+  }
+
+  console.log(allDaycares);
+  console.log(addressArray);
+
+  function getCoordinates(){
+    addressArray.forEach(addy => {
+      Geocode.fromAddress(addy).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+    })
+
+  }
+
+  return(
+    <div></div>
+  )
 
 }
 

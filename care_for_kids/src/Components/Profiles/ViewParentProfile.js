@@ -144,6 +144,7 @@ export default function ViewParentProfile(props) {
 
     let arr = [child1, child2, child3, child4]
 
+    
     if (child1, child2, child3, child4){
         arr.forEach(c => {
             if (c.age_group === "http://127.0.0.1:8000/age_groups/1/"){
