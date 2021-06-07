@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import Geocode from "react-geocode";
 import serviceLayer from "../../Service/serviceLayer";
+import { Marker } from '@react-google-maps/api';
+import GoogleAPIWrapper from "./GoogleAPIWrapper";
 
-const Map = () => {
+const Map = (props) => {
+
+  const [markers, setMarkers] = useState([])
+
   Geocode.setApiKey("AIzaSyBEQFuqV4c2Tr69WoolL5i-qPfF1zNZKxQ");
   Geocode.setLanguage("en");
   Geocode.setRegion("us");
@@ -28,46 +33,74 @@ const Map = () => {
       .catch(err => (console.log(err)))
   }
 
+  let addressArray = [];
+
 
   useEffect(() => {
     getAllDaycares();
-    getCoordinates();
-  }, [])
+    getAddress();
+  }, [props])
 
-  let addressArray = [];
+  useEffect(() => {
+    getCoordinates();
+  }, [allDaycares])
+
   let count = 0;
 
 
-  while (count <= 0){
+  // while (count <= 0){
+  //   allDaycares.forEach(daycare => {
+  //     let address = `${daycare.street_address}, ${daycare.city}, ${daycare.state}`;
+  //     addressArray.push(address);
+  //   })
+
+    
+
+  //   count = 1;
+  // }
+
+  function getAddress(){
     allDaycares.forEach(daycare => {
       let address = `${daycare.street_address}, ${daycare.city}, ${daycare.state}`;
       addressArray.push(address);
     })
-
-    count = 1;
   }
-
-  console.log(allDaycares);
-  console.log(addressArray);
 
   function getCoordinates(){
     addressArray.forEach(addy => {
       Geocode.fromAddress(addy).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
+        if ({lat, lng} in markers){
+          console.log('marker exists');
+        }
+        else{
+          setMarkers(markers => [...markers, {lat, lng}])
+        }
+        
         console.log(lat, lng);
       },
       (error) => {
         console.error(error);
       }
     );
-
     })
-
   }
 
+  const mapLat = () => {
+    return(
+      markers.map(m => {
+        return (<Marker position={{lat: m.lat, lng: m.lng}} />)
+      })
+    )
+  }
+
+
+
   return(
-    <div></div>
+    <>
+    <GoogleAPIWrapper mapMarkers={mapLat()} />
+    </>
   )
 
 }

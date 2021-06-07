@@ -9,7 +9,6 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
 
     map: {
-        backgroundColor: 'red',
         height: '600px',
         width: '600px',
         position: 'absolute',
@@ -51,7 +50,7 @@ const DaycareSearchPage = (props) => {
     return (
         <div>
             <div>Search Bar</div>
-            <div className={classes.map}>{/* <GoogleAPIWrapper /> */}</div>
+            <div className={classes.map}><Map /></div>
             {allDaycares && 
             allDaycares.map((daycare, i) => {
                 return (
@@ -70,7 +69,7 @@ const DaycareSearchPage = (props) => {
                 )
             })
             }
-            {/* <Map /> */}
+            
         </div>
     )
 }
