@@ -25,6 +25,9 @@ function SearchBar(props) {
 
     const [daycares, setDaycares] = useState([]);
     const [ageGroups, setAgeGroups] = useState([])
+    const [selectedAgeGroup, setSelectedAgeGroup] = useState();
+    const [selectedRadius, setSelectedRadius] = useState();
+    const [location, setLocation] = useState();
 
     useEffect(() => {
         getGroups();
@@ -37,7 +40,6 @@ function SearchBar(props) {
     async function getGroups(){
         try{
             const response = await serviceLayer.getAllAgeGroups();
-            console.log(response.data);
             setAgeGroups(response.data);
         }
         catch(err) {
@@ -45,8 +47,15 @@ function SearchBar(props) {
         }
     }
 
-    console.log(daycares);
-    console.log('age groups', ageGroups);
+    const handleAgeGroupChange = (e) => {
+        setSelectedAgeGroup(e.target.value);
+    }
+    const handleRadiusChange = (e) => {
+        setSelectedRadius(e.target.value);
+    }
+    const handleLocationChange = (e) => {
+        setLocation(e.target.value);
+    }
 
     const mapGroups = () => {
         return (
@@ -69,11 +78,11 @@ function SearchBar(props) {
                     <Select
                     native
                     name="radius"
-                    // value={child1.age_group}
-                    // onChange={handleChild1Change}
+                    value={selectedAgeGroup}
+                    onChange={handleAgeGroupChange}
                     input={<Input id="radius" />}
                     >
-                    <option value={''}></option>
+                    <option aria-label="None" value="" />
                     {mapGroups()}
                     </Select>
                 </FormControl>
@@ -85,8 +94,8 @@ function SearchBar(props) {
                     <Select
                     native
                     name="radius"
-                    // value={child1.age_group}
-                    // onChange={handleChild1Change}
+                    value={selectedRadius}
+                    onChange={handleRadiusChange}
                     input={<Input id="radius" />}
                     >
                     <option value={''}></option>
@@ -100,8 +109,8 @@ function SearchBar(props) {
                 <InputLabel className={classes.inputLabel}>Search By City/State</InputLabel>
                 <TextField
                 className={classes.textField}
+                onChange={handleLocationChange}
                 placeholder="i.e. Anchorage, AK"
-                
                 />
             </div>
 

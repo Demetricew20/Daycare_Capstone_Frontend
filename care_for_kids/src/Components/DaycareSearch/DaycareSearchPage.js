@@ -24,17 +24,6 @@ const DaycareSearchPage = (props) => {
     const [reviews, setReviews] = useState();
     const [parent, setParent] = useState();
 
-    // async function getReviews(){
-    //     try{
-    //         const response = await serviceLayer.getAllReviews();
-    //         setReviews(response.data);
-    //     }
-    //     catch(err){
-    //         console.log('SearchPage', err);
-    //     }
-    // }
-
-
     useEffect(() => {
         setParent(props.parent);
         setAllDaycares(props.daycares);
