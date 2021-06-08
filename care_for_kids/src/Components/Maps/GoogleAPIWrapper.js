@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import Map from './Map';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '600px',
+  height: '600px'
 };
 
 const center = {
@@ -13,6 +13,10 @@ const center = {
 };
 
 function MyComponent(props) {
+
+  useEffect(() => {
+  }, [props])
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyBEQFuqV4c2Tr69WoolL5i-qPfF1zNZKxQ"
@@ -33,8 +37,8 @@ function MyComponent(props) {
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
+        center={props.parentLocation}
+        zoom={11}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >

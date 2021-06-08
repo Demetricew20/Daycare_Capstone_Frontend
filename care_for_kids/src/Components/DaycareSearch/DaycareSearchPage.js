@@ -12,10 +12,9 @@ const useStyles = makeStyles((theme) => ({
         height: '600px',
         width: '600px',
         position: 'absolute',
-        top: '25%',
-        right: '0%'
+        top: '17%',
+        right: '5%'
     }
-
  }))
 
 const DaycareSearchPage = (props) => {
@@ -50,21 +49,21 @@ const DaycareSearchPage = (props) => {
     return (
         <div>
             <div>Search Bar</div>
-            <div className={classes.map}><Map /></div>
+            <div className={classes.map}><Map parent={parent} /></div>
             {allDaycares && 
             allDaycares.map((daycare, i) => {
                 return (
                     <div key={i} style={{marginTop: '2rem'}}>
-                    <DaycareSearchTable 
-                    daycare={daycare}
-                    daycareName={daycare.name} 
-                    description={daycare.description} 
-                    cardImage={Image} 
-                    rating={daycare.avg_rating} 
-                    street_address={daycare.street_address}
-                    city={daycare.city}
-                    state={daycare.state}
-                    />
+                        <DaycareSearchTable 
+                        daycare={daycare}
+                        daycareName={daycare.name} 
+                        description={daycare.description} 
+                        cardImage={Image} 
+                        rating={daycare.avg_rating} 
+                        street_address={daycare.street_address}
+                        city={daycare.city}
+                        state={daycare.state}
+                        />
                     </div>
                 )
             })

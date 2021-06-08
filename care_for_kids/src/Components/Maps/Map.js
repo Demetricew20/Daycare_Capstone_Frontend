@@ -13,6 +13,8 @@ const Map = (props) => {
   Geocode.setRegion("us");
 
   const [allDaycares, setAllDaycares] = useState([]);
+  const [parent, setParent] = useState();
+  const [parentLocation, setParentLocation] = useState();
 
   // set location_type filter . Its optional.
   // google geocoder returns more that one address for given lat/lng.
@@ -39,25 +41,15 @@ const Map = (props) => {
   useEffect(() => {
     getAllDaycares();
     getAddress();
+    setParent(props.parent);
   }, [props])
 
   useEffect(() => {
     getCoordinates();
+    if(parent){
+      getParentCoordinates();
+    }
   }, [allDaycares])
-
-  let count = 0;
-
-
-  // while (count <= 0){
-  //   allDaycares.forEach(daycare => {
-  //     let address = `${daycare.street_address}, ${daycare.city}, ${daycare.state}`;
-  //     addressArray.push(address);
-  //   })
-
-    
-
-  //   count = 1;
-  // }
 
   function getAddress(){
     allDaycares.forEach(daycare => {
@@ -87,10 +79,24 @@ const Map = (props) => {
     })
   }
 
+  function getParentCoordinates(){
+    let address = `${parent.street_address}, ${parent.city}, ${parent.state}`;
+    Geocode.fromAddress(address).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        setParentLocation({lat, lng})
+        console.log(lat, lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
   const mapLat = () => {
     return(
-      markers.map(m => {
-        return (<Marker position={{lat: m.lat, lng: m.lng}} />)
+      markers.map((m, i) => {
+        return (<Marker key={i} position={{lat: m.lat, lng: m.lng}} />)
       })
     )
   }
@@ -99,7 +105,7 @@ const Map = (props) => {
 
   return(
     <>
-    <GoogleAPIWrapper mapMarkers={mapLat()} />
+    <GoogleAPIWrapper mapMarkers={mapLat()} parentLocation={parentLocation} />
     </>
   )
 
