@@ -59,10 +59,10 @@ function SearchBar(props) {
 
     const mapGroups = () => {
         return (
-            ageGroups.map(group => {
+            ageGroups.map((group, i) => {
                 return(
                     <>
-                    <option value={group.group_name}>{group.group_name}</option>
+                    <option key={i} value={group.group_name}>{group.group_name}</option>
                     </>
                 )
             })
@@ -91,27 +91,27 @@ function SearchBar(props) {
             <div>
                 <FormControl className={classes.select}>
                     <InputLabel htmlFor="radius">Search By Radius</InputLabel>
-                    <Select
-                    native
-                    name="radius"
-                    value={selectedRadius}
-                    onChange={handleRadiusChange}
-                    input={<Input id="radius" />}
-                    >
-                    <option value={''}></option>
-                    <option value={"15"}>15 Miles</option>
-                    <option value={"30"}>30 Miles</option>
-                    </Select>
+                        <Select
+                        native
+                        name="radius"
+                        value={selectedRadius}
+                        onChange={handleRadiusChange}
+                        input={<Input id="radius" />}
+                        >
+                        <option value={''}></option>
+                        <option value={"15"}>15 Miles</option>
+                        <option value={"30"}>30 Miles</option>
+                        </Select>
                 </FormControl>
             </div>
 
             <div style={{display: 'flex'}}>
                 <InputLabel className={classes.inputLabel}>Search By City/State</InputLabel>
-                <TextField
-                className={classes.textField}
-                onChange={handleLocationChange}
-                placeholder="i.e. Anchorage, AK"
-                />
+                    <TextField
+                    className={classes.textField}
+                    onChange={handleLocationChange}
+                    placeholder="i.e. Anchorage, AK"
+                    />
             </div>
 
 
