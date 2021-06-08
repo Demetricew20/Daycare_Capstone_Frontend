@@ -28,8 +28,8 @@ class ServiceLayer {
         return axiosInstance.post('daycares/', data);
     }
 
-    getDaycareByUserId(id){
-        return axiosInstance.get(`daycares/${id}`);
+    getDaycareById(id){
+        return axiosInstance.get(`daycares/${id}/`);
     }
     //Age groups
     getAllAgeGroups(){

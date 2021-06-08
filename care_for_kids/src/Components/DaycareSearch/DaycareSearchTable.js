@@ -121,8 +121,9 @@ export default function DaycareCards(props) {
     )
 }
 
+  const redirectLink = `daycare-details/${props.daycare_id}`
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} >
       <CardHeader
         title={props.daycareName}
       />
@@ -161,7 +162,7 @@ export default function DaycareCards(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography ><a style={{cursor: 'pointer'}} href='/daycare-details'>View Daycare</a></Typography>
+          <Typography ><a style={{cursor: 'pointer'}} href={redirectLink}>View Daycare</a></Typography>
           <Typography >
             {/* Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
             without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to

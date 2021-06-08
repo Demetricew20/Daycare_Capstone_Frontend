@@ -46,6 +46,7 @@ const DaycareSearchPage = (props) => {
                     <div key={i} style={{marginTop: '2rem'}}>
                         <DaycareSearchTable 
                         daycare={daycare}
+                        daycare_id={daycare.id}
                         daycareName={daycare.name} 
                         description={daycare.description} 
                         cardImage={Image} 

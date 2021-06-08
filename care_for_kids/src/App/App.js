@@ -13,6 +13,7 @@ import ViewParentProfile from '../Components/Profiles/ViewParentProfile';
 import ViewDaycareProfile from '../Components/Profiles/ViewDaycareProfile';
 import serviceLayer from '../Service/serviceLayer';
 import DaycareSearchPage from '../Components/DaycareSearch/DaycareSearchPage';
+import DaycareDetails from '../Components/DaycareDetails/DaycareDetails';
 
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
       <Route path='/view-parent-profile' component={ViewParentProfile} />
       <Route path='/view-daycare-profile' component={ViewDaycareProfile} />
       <Route path='/daycare-search'><DaycareSearchPage allParents={allParents} parent={parent} daycares={allDaycares} /> </Route>
+      <Route path="/daycare-details"><DaycareDetails daycares={allDaycares} /></Route>
     </Switch>
     </Paper>
   );
