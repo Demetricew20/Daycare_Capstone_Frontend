@@ -49,7 +49,7 @@ const DaycareSearchPage = (props) => {
 
     return (
         <div>
-            <div style={{marginTop: '2rem'}}><SearchBar /></div>
+            <div style={{marginTop: '2rem'}}><SearchBar daycares={props.daycares} /></div>
             {/* <div className={classes.map}><Map parent={parent} /></div> */}
             {allDaycares && 
             allDaycares.map((daycare, i) => {

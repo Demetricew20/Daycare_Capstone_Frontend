@@ -1,5 +1,6 @@
 import { FormControl, Input, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import serviceLayer from '../../Service/serviceLayer';
 
 const useStyles = makeStyles((theme) => ({
     select: {
@@ -8,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     inputLabel: {
-        marginLeft: '5rem',
+        marginLeft: '2rem',
         marginRight: '1rem',
         position: 'relative',
         top: '30px'
@@ -20,11 +21,64 @@ const useStyles = makeStyles((theme) => ({
     }
     }));
 
-function SearchBar() {
+function SearchBar(props) {
+
+    const [daycares, setDaycares] = useState([]);
+    const [ageGroups, setAgeGroups] = useState([])
+
+    useEffect(() => {
+        getGroups();
+    }, [])
+
+    useEffect(() => {
+        setDaycares(props.daycares);
+    }, [props])
+
+    async function getGroups(){
+        try{
+            const response = await serviceLayer.getAllAgeGroups();
+            console.log(response.data);
+            setAgeGroups(response.data);
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+
+    console.log(daycares);
+    console.log('age groups', ageGroups);
+
+    const mapGroups = () => {
+        return (
+            ageGroups.map(group => {
+                return(
+                    <>
+                    <option value={group.group_name}>{group.group_name}</option>
+                    </>
+                )
+            })
+        )
+    }
 
     const classes = useStyles();
     return (
         <div style={{display: 'flex'}}>
+            <div>
+                <FormControl className={classes.select}>
+                    <InputLabel htmlFor="radius">Search By Available Age Group</InputLabel>
+                    <Select
+                    native
+                    name="radius"
+                    // value={child1.age_group}
+                    // onChange={handleChild1Change}
+                    input={<Input id="radius" />}
+                    >
+                    <option value={''}></option>
+                    {mapGroups()}
+                    </Select>
+                </FormControl>
+            </div>
+
             <div>
                 <FormControl className={classes.select}>
                     <InputLabel htmlFor="radius">Search By Radius</InputLabel>
@@ -50,6 +104,8 @@ function SearchBar() {
                 
                 />
             </div>
+
+
 
         </div>
     )
