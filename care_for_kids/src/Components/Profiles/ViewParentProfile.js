@@ -124,9 +124,7 @@ export default function ViewParentProfile(props) {
                     setChild4(response.data);
                 })
             }
-
         }
-
     }
 
     useEffect(() => {
@@ -144,7 +142,6 @@ export default function ViewParentProfile(props) {
 
     let arr = [child1, child2, child3, child4]
 
-    
     if (child1, child2, child3, child4){
         arr.forEach(c => {
             if (c.age_group === "http://127.0.0.1:8000/age_groups/1/"){
@@ -169,7 +166,7 @@ export default function ViewParentProfile(props) {
         if (child1 && child2 && child3 && child4){
             return (
                 arr.map((c, i) => (
-                    <ul style={{listStyleType: 'none'}}>
+                    <ul key={i} style={{listStyleType: 'none'}}>
                         <li>{c.name}</li>
                         <li>{c.age_group}</li>
                     </ul>

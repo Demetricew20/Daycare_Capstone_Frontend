@@ -5,6 +5,7 @@ import Map from '../../Components/Maps/Map'
 import serviceLayer from '../../Service/serviceLayer';
 import GoogleAPIWrapper from '../Maps/GoogleAPIWrapper';
 import {makeStyles} from '@material-ui/core/styles';
+import SearchBar from './SearchBar';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -48,8 +49,8 @@ const DaycareSearchPage = (props) => {
 
     return (
         <div>
-            <div>Search Bar</div>
-            <div className={classes.map}><Map parent={parent} /></div>
+            <div style={{marginTop: '2rem'}}><SearchBar /></div>
+            {/* <div className={classes.map}><Map parent={parent} /></div> */}
             {allDaycares && 
             allDaycares.map((daycare, i) => {
                 return (
