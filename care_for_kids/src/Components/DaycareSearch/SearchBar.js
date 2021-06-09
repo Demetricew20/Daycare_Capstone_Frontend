@@ -69,6 +69,10 @@ function SearchBar(props) {
         )
     }
 
+    props.callbackToSearchPage(location);
+    props.callbackRadiusSearch(selectedRadius);
+    props.callbackAgeGroupSearch(selectedAgeGroup);
+
     const classes = useStyles();
     return (
         <div style={{display: 'flex'}}>

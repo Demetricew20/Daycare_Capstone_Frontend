@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
 const DaycareSearchPage = (props) => {
 
     const [allDaycares, setAllDaycares] = useState([]);
+    const [location, setLocation] = useState();
+    const [radius, setRadius] = useState();
+    const [ageGroup, setAgeGroup] = useState();
     const [reviews, setReviews] = useState();
     const [parent, setParent] = useState();
 
@@ -34,11 +37,29 @@ const DaycareSearchPage = (props) => {
     console.log(parent);
     console.log(reviews);
 
+    const locationCallback = (dataFromChild) => {
+        setLocation(dataFromChild);
+    }
+
+    const radiusCallback = (dataFromChild) => {
+        setRadius(dataFromChild);
+    }
+
+    const ageGroupCallback = (dataFromChild) => {
+        setAgeGroup(dataFromChild);
+    }
+
     const classes = useStyles();
 
     return (
         <div>
-            <div style={{marginTop: '2rem'}}><SearchBar daycares={props.daycares} /></div>
+            <div style={{marginTop: '2rem'}}>
+                <SearchBar daycares={props.daycares} 
+                callbackToSearchPage={locationCallback} 
+                callbackRadiusSearch={radiusCallback}
+                callbackAgeGroupSearch={ageGroupCallback}  
+                />
+            </div>
             {/* <div className={classes.map}><Map parent={parent} /></div> */}
             {allDaycares && 
             allDaycares.map((daycare, i) => {
