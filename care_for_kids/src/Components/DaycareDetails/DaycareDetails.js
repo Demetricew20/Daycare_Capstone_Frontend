@@ -20,7 +20,6 @@ function DaycareDetails(props) {
             try{
                 const response = await serviceLayer.getDaycareById(id)
                 setDaycare(response.data);
-                console.log(response.data);
             }
             catch(err){
                 console.log(err);

@@ -81,7 +81,6 @@ export default function ViewParentProfile(props) {
     const getParents = () => {
         serviceLayer.getAllParents()
         .then(response => {
-            console.log(response);
             setAllParents(response.data);
         })
         .catch(err => {
@@ -177,9 +176,6 @@ export default function ViewParentProfile(props) {
 
 
     const classes = useStyles();
-    console.log(child1)
-    console.log(child2)
-    console.log(child3)
 
     return (
         <div className={classes.root}>

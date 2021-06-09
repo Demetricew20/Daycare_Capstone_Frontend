@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  navlink: {
+  navLink: {
     color: 'white',
     listStyle: 'none',
     position: 'relative',
@@ -106,6 +106,7 @@ export default function NavigationBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [user, setUser] = useState();
   const [mailCount, setMailCount] = useState(0);
   const [notificationCount, setNotificationCount] = useState(0);
 
@@ -116,6 +117,8 @@ export default function NavigationBar() {
   useEffect(() => {
     if(jwt){
       setInitialLogin(false);
+      let userInfo = jwtDecode(jwt);
+      setUser(userInfo);
     }
   },[])
 
@@ -170,27 +173,22 @@ export default function NavigationBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {initialLogin ?  
-      <>
-            <MenuItem onClick={handleProfileMenuOpen}>
-            <p style={{marginLeft: '5px'}} >About Us</p>
-          </MenuItem>
-      </>
-      : 
-      
-      <></>
-      
+      {initialLogin && 
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <p style={{marginLeft: '5px'}} >About Us</p>
+        </MenuItem>
       }
       </Menu>
   );
 
-
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.navbar}>
-        {/* CREATE AN INITIAL LOGIN VIEW */}
         <Toolbar>
-          <Link component={RouterLink} to={initialLogin ? '/login' : 'create-daycare-profile'} underline="none" className={classes.navlink}>
+          <Link component={RouterLink} 
+          to={initialLogin ? '/login' : user.is_daycare ? 'view-daycare-profile' : 'view'} 
+          underline="none" 
+          className={classes.navLink}>
             <Typography className={classes.title} paragraph={false} align="center" noWrap>
               <img className={classes.image} src={Logo} alt="Logo"/>
             </Typography>
@@ -199,6 +197,11 @@ export default function NavigationBar() {
           <div className={classes.sectionDesktop}>
             {/* NEED TO ADD LINKS */}
           {initialLogin === true && <Typography className={classes.links} variant="h5" noWrap> About Us </Typography> }
+          {!initialLogin && user.is_daycare ?
+            <Link className={classes.links} variant="h5" href="/view-daycare-profile" noWrap> View Profile </Link>
+            :
+            <Link className={classes.links} variant="h5" href="/view-parent-profile" noWrap> View Profile </Link>
+          }
 
           {/* Icons with Badges */}
             {initialLogin === false && <IconButton aria-label="show new mails" color="inherit">
