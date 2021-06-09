@@ -93,12 +93,20 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  navLink: {
+  login_navLink: {
     color: 'white',
     listStyle: 'none',
     position: 'relative',
     textDecoration: 'none',
   },
+  home_navLink:{
+    color: 'white',
+    listStyle: 'none',
+    position: 'relative',
+    top: '15px',
+    fontSize: '1.25rem',
+    textDecoration: 'none',
+  }
 }));
 
 export default function NavigationBar() {
@@ -156,7 +164,6 @@ export default function NavigationBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>Log Off</MenuItem>
     </Menu>
   );
@@ -175,7 +182,7 @@ export default function NavigationBar() {
     >
       {initialLogin && 
         <MenuItem onClick={handleProfileMenuOpen}>
-          <p style={{marginLeft: '5px'}} >About Us</p>
+          {/* <p style={{marginLeft: '5px'}} >About Us</p> */}
         </MenuItem>
       }
       </Menu>
@@ -196,14 +203,18 @@ export default function NavigationBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {/* NEED TO ADD LINKS */}
-          {initialLogin === true && <Typography className={classes.links} variant="h5" noWrap> About Us </Typography> }
-          {!initialLogin && user.is_daycare ?
-            <Link className={classes.links} variant="h5" href="/view-daycare-profile" noWrap> View Profile </Link>
-            :
-            <Link className={classes.links} variant="h5" href="/view-parent-profile" noWrap> View Profile </Link>
+          {/* {initialLogin === true && <Typography className={classes.login_navLink} variant="h5" noWrap> About Us </Typography> } */}
+          {!initialLogin && user.is_daycare &&
+            <Link className={classes.home_navLink} href="/view-daycare-profile" noWrap> View Profile </Link>
+          }
+          {!initialLogin && !user.is_daycare &&
+            <>
+            <Link className={classes.home_navLink} href="/view-parent-profile" noWrap> View Profile </Link>
+            <Link style={{marginLeft: '3rem', marginRight: '3rem'}} className={classes.home_navLink} href="/daycare-search" noWrap> Daycare Search </Link>
+            </>
           }
 
-          {/* Icons with Badges */}
+          {/* Icons with Badges
             {initialLogin === false && <IconButton aria-label="show new mails" color="inherit">
               <Badge badgeContent={mailCount} color="secondary">
                 <MailIcon />
@@ -214,7 +225,8 @@ export default function NavigationBar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton> }
-            {initialLogin === false && <IconButton
+             */}
+              {initialLogin === false && <IconButton
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -222,7 +234,7 @@ export default function NavigationBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle fontSize="large" />
             </IconButton> }
           </div>
           <div className={classes.sectionMobile}>
