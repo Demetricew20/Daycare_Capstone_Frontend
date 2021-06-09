@@ -8,7 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '90vh',
+        height: '100vh',
         // backgroundImage: `url(${Image})`,
         // backgroundSize: 'cover',
         // backgroundPosition: 'top',
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'relative',
         top: '100px',
-        height: '58vh',
+        height: '70vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -141,27 +141,33 @@ export default function ViewParentProfile(props) {
 
     let arr = [child1, child2, child3, child4]
 
-    if (child1, child2, child3, child4){
-        arr.forEach(c => {
-            if (c.age_group === "http://127.0.0.1:8000/age_groups/1/"){
-                c.age_group = "Infant (Younger than 12 months)"
-            }
-            else if (c.age_group ==="http://127.0.0.1:8000/age_groups/2/" ){
-                c.age_group = "Young Toddler (1-2 years)"
-                
-            }
-            else if (c.age_group === 'http://127.0.0.1:8000/age_groups/3/' ){
-                c.age_group = "Older Toddler (2-3 years)"
-            }
-            else if (c.age_group === 'http://127.0.0.1:8000/age_groups/4/'){
-                c.age_group = "Preschooler (3-5 years)"
-            }
-        })
+    function ageGroupInfo(){
+        if (arr && children){
+            arr.forEach(c => {
+                if (c.age_group === "http://127.0.0.1:8000/age_groups/1/"){
+                    c.age_group = "Infant (Younger than 12 months)"
+                }
+                else if (c.age_group ==="http://127.0.0.1:8000/age_groups/2/" ){
+                    c.age_group = "Young Toddler (1-2 years)"
+                    
+                }
+                else if (c.age_group === 'http://127.0.0.1:8000/age_groups/3/' ){
+                    c.age_group = "Older Toddler (2-3 years)"
+                }
+                else if (c.age_group === 'http://127.0.0.1:8000/age_groups/4/'){
+                    c.age_group = "Preschooler (3-5 years)"
+                }
+            })
+    
+        }
 
     }
 
 
+
+
     const mapChild = () => {
+        ageGroupInfo();
         if (child1 && child2 && child3 && child4){
             return (
                 arr.map((c, i) => (
