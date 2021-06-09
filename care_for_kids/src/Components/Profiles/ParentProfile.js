@@ -120,9 +120,9 @@ export default function ParentProfile(props) {
 
     const viewProfile = (parentInfo, id) => {
         history.push({
-          pathname: '/view-parent-profile',
-          search: `?query=${id}`,
-          state: {parent: parentInfo, parentId: id}
+            pathname: '/view-parent-profile',
+            search: `?query=${id}`,
+            state: {parent: parentInfo, parentId: id}
         })
     }
 
@@ -332,6 +332,7 @@ export default function ParentProfile(props) {
                 console.log('child3', err);
             }
         }
+
         if(child4.age_group){
             const data = {
                 name: child4.name,
@@ -369,8 +370,6 @@ export default function ParentProfile(props) {
         catch(err){
             console.log(err);
         }
-
-
     }
 
     return (
@@ -381,83 +380,83 @@ export default function ParentProfile(props) {
                 <Grid container spacing={3} className={classes.grid}>
                     <Grid item xs={2}/>
                     <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="street_address"
-                    label="Street Address"
-                    name="street_address"
-                    value={parent.street_address}
-                    onChange={handleParentChanges}
-                    autoComplete="street_address"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="street_address"
+                        label="Street Address"
+                        name="street_address"
+                        value={parent.street_address}
+                        onChange={handleParentChanges}
+                        autoComplete="street_address"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={2}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="city"
-                    label="City"
-                    name="city"
-                    value={parent.city}
-                    onChange={handleParentChanges}
-                    autoComplete="city"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="city"
+                        label="City"
+                        name="city"
+                        value={parent.city}
+                        onChange={handleParentChanges}
+                        autoComplete="city"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={2}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    //inputProps={{max: '3'}}
-                    required
-                    fullWidth
-                    id="state"
-                    label="State"
-                    name="state"
-                    value={parent.state}
-                    onChange={handleParentChanges}
-                    autoComplete="state"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        //inputProps={{max: '3'}}
+                        required
+                        fullWidth
+                        id="state"
+                        label="State"
+                        name="state"
+                        value={parent.state}
+                        onChange={handleParentChanges}
+                        autoComplete="state"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={1}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="zip_code"
-                    label="Zip"
-                    name="zip_code"
-                    value={parent.zip_code}
-                    onChange={handleParentChanges}
-                    autoComplete="zip_code"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="zip_code"
+                        label="Zip"
+                        name="zip_code"
+                        value={parent.zip_code}
+                        onChange={handleParentChanges}
+                        autoComplete="zip_code"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={2}/>
                     {/* Child */}
                     <Grid item xs={2}/>
                     <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Child Name"
-                    name="name"
-                    value={child1.name}
-                    onChange={handleChild1Change}
-                    autoComplete="name"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Child Name"
+                        name="name"
+                        value={child1.name}
+                        onChange={handleChild1Change}
+                        autoComplete="name"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={1}/>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
@@ -469,7 +468,10 @@ export default function ParentProfile(props) {
                             <span onClick={() =>setOptions({...options, option1: true}) }>
                                 {options.option1 === true  ? <></>
                                 : 
-                                <span style={{display: 'flex'}}><AddBoxIcon className={classes.icon}/><span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span></span>
+                                <span style={{display: 'flex'}}>
+                                    <AddBoxIcon className={classes.icon}/>
+                                    <span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span>
+                                </span>
                                 
                                 }
                             </span>
@@ -480,19 +482,19 @@ export default function ParentProfile(props) {
                     <Grid item xs={2}/>
                     {/* Child */}
                     <Grid item xs={3}>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Child Name"
-                    name="name"
-                    value={child2.name}
-                    onChange={handleChild2Change}
-                    autoComplete="name"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Child Name"
+                        name="name"
+                        value={child2.name}
+                        onChange={handleChild2Change}
+                        autoComplete="name"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={1}/>
                     <Grid item xs={3}>
@@ -503,7 +505,10 @@ export default function ParentProfile(props) {
                             <span onClick={() =>setOptions({...options, option2: true}) }>
                                 {options.option2 === true  ? <></>
                                 : 
-                                <span style={{display: 'flex'}}><AddBoxIcon className={classes.icon}/><span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span></span>
+                                <span style={{display: 'flex'}}>
+                                    <AddBoxIcon className={classes.icon}/>
+                                    <span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span>
+                                </span>
                                 
                                 }
                             </span>
@@ -519,19 +524,19 @@ export default function ParentProfile(props) {
                     {/* Child */}
                     <Grid item xs={3}>
                     {/* DROPDOWN MENU OF AGE GROUPS */}
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Child Name"
-                    name="name"
-                    value={child3.name}
-                    onChange={handleChild3Change}
-                    autoComplete="name"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Child Name"
+                        name="name"
+                        value={child3.name}
+                        onChange={handleChild3Change}
+                        autoComplete="name"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={1}/>
                     <Grid item xs={3}>
@@ -539,10 +544,13 @@ export default function ParentProfile(props) {
                     </Grid>
                     <Grid item xs={2}>
                         <div style={{marginTop: '30px'}}>
-                            <span onClick={() =>setOptions({...options, option3: true}) }>
+                            <span onClick={() => setOptions({...options, option3: true}) }>
                                 {options.option3 === true  ? <></>
                                 :  
-                                <span style={{display: 'flex'}}><AddBoxIcon className={classes.icon}/><span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span></span>
+                                <span style={{display: 'flex'}}>
+                                    <AddBoxIcon className={classes.icon}/>
+                                    <span style={{display: 'flex', marginLeft: '1rem'}}>Add Child</span>
+                                </span>
                                 }
                             </span>
                         </div>
@@ -557,24 +565,23 @@ export default function ParentProfile(props) {
                     <Grid item xs={2}/>
                     {/* Child */}
                     <Grid item xs={3}>
-                    {/* DROPDOWN MENU OF AGE GROUPS */}
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Child Name"
-                    name="name"
-                    value={child4.name}
-                    onChange={handleChild4Change}
-                    autoComplete="name"
-                    autoFocus
-                    />
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="name"
+                        label="Child Name"
+                        name="name"
+                        value={child4.name}
+                        onChange={handleChild4Change}
+                        autoComplete="name"
+                        autoFocus
+                        />
                     </Grid>
                     <Grid item xs={1}/>
                     <Grid item xs={3}>
-                    {selectAgeGroup4()}
+                        {selectAgeGroup4()}
                     </Grid>
                     </>
                     :
@@ -582,7 +589,14 @@ export default function ParentProfile(props) {
                     }
                     <Grid item xs={4} />
                     <Grid item xs={4}>
-                        <Button fullWidth variant="contained" color="primary" type="submit" onClick={handleSubmit} className={classes.submit}>Submit</Button>
+                        <Button 
+                        fullWidth 
+                        variant="contained" 
+                        color="primary" 
+                        type="submit" 
+                        onClick={handleSubmit} 
+                        className={classes.submit}>
+                        Submit</Button>
                     </Grid>
                     <Grid item xs={4} />
                     <Grid item xs={1} />

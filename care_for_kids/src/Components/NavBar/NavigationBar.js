@@ -205,7 +205,7 @@ export default function NavigationBar() {
             {/* NEED TO ADD LINKS */}
           {/* {initialLogin === true && <Typography className={classes.login_navLink} variant="h5" noWrap> About Us </Typography> } */}
           {!initialLogin && user.is_daycare &&
-            <Link className={classes.home_navLink} href="/view-daycare-profile" noWrap> View Profile </Link>
+            <Link style={{marginLeft: '3rem', marginRight: '3rem'}} className={classes.home_navLink} href="/view-daycare-profile" noWrap> View Profile </Link>
           }
           {!initialLogin && !user.is_daycare &&
             <>
