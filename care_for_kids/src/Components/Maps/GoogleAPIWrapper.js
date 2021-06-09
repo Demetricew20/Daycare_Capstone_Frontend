@@ -7,11 +7,6 @@ const containerStyle = {
   height: '600px'
 };
 
-const center = {
-  lat: 40.0489,
-  lng: -100.093735
-};
-
 function MyComponent(props) {
 
   useEffect(() => {
@@ -34,10 +29,19 @@ function MyComponent(props) {
     setMap(null)
   }, [])
 
+  const centerMap = () => {
+    if(props.searchLocation){
+      return props.searchLocation;
+    }
+    else{
+      return props.parentLocation;
+    }
+  }
+
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={props.parentLocation}
+        center={centerMap()}
         zoom={11}
         onLoad={onLoad}
         onUnmount={onUnmount}

@@ -1,6 +1,7 @@
-import { FormControl, Input, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
+import { Button, FormControl, Input, InputLabel, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import serviceLayer from '../../Service/serviceLayer';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
     select: {
@@ -18,6 +19,15 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         top: '15px',
         width: '20rem'
+    },
+    icon: {
+        color: '#60B0F4',
+        fontSize: '1.75rem',
+        padding: 0,
+        margin: 0,
+        position: 'relative',
+        top: '20px',
+        cursor: 'pointer',
     }
     }));
 
@@ -69,7 +79,6 @@ function SearchBar(props) {
         )
     }
 
-    props.callbackToSearchPage(location);
     props.callbackRadiusSearch(selectedRadius);
     props.callbackAgeGroupSearch(selectedAgeGroup);
 
@@ -115,6 +124,10 @@ function SearchBar(props) {
                     className={classes.textField}
                     onChange={handleLocationChange}
                     placeholder="i.e. Anchorage, AK"
+                    />
+                    <SearchIcon 
+                    className={classes.icon}
+                    onClick={() => props.callbackToSearchPage(location)}
                     />
             </div>
 

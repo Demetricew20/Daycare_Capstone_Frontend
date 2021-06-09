@@ -6,14 +6,16 @@ import GoogleAPIWrapper from "./GoogleAPIWrapper";
 
 const Map = (props) => {
 
-  const [markers, setMarkers] = useState([])
+
 
   Geocode.setApiKey("AIzaSyBEQFuqV4c2Tr69WoolL5i-qPfF1zNZKxQ");
   Geocode.setLanguage("en");
   Geocode.setRegion("us");
 
+  const [markers, setMarkers] = useState([])
   const [allDaycares, setAllDaycares] = useState([]);
   const [parent, setParent] = useState();
+  const [searchLocation, setSearchLocation] = useState();
   const [parentLocation, setParentLocation] = useState();
 
   // set location_type filter . Its optional.
@@ -46,6 +48,7 @@ const Map = (props) => {
 
   useEffect(() => {
     getCoordinates();
+    searchLocationCoordinates();
     if(parent){
       getParentCoordinates();
     }
@@ -93,6 +96,17 @@ const Map = (props) => {
     );
   }
 
+  function searchLocationCoordinates(){
+    if(props.searchLocation){
+      Geocode.fromAddress(props.searchLocation).then(
+        (response) => {
+          const {lat, lng } = response.results[0].geometry.location;
+          setSearchLocation({lat, lng})
+        }
+      )
+    }
+  }
+
   const mapLat = () => {
     return(
       markers.map((m, i) => {
@@ -101,11 +115,13 @@ const Map = (props) => {
     )
   }
 
+  
 
+  console.log(searchLocation);
 
   return(
     <>
-    <GoogleAPIWrapper mapMarkers={mapLat()} parentLocation={parentLocation} />
+    <GoogleAPIWrapper mapMarkers={mapLat()} parentLocation={parentLocation} searchLocation={searchLocation} />
     </>
   )
 
