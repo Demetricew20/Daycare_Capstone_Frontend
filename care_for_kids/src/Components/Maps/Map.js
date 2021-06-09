@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
 import Geocode from "react-geocode";
 import serviceLayer from "../../Service/serviceLayer";
-import { Marker } from '@react-google-maps/api';
+import { Marker, DistanceMatrixService } from '@react-google-maps/api';
 import GoogleAPIWrapper from "./GoogleAPIWrapper";
 
 const Map = (props) => {
 
 
-
-  Geocode.setApiKey("AIzaSyBEQFuqV4c2Tr69WoolL5i-qPfF1zNZKxQ");
+  const key = "AIzaSyBEQFuqV4c2Tr69WoolL5i-qPfF1zNZKxQ"
+  Geocode.setApiKey(key);
   Geocode.setLanguage("en");
   Geocode.setRegion("us");
+
+  // const distance = require('google-distance-matrix');
+  // distance.key(key);
+  // distance.units('imperial');
+  // distance.mode('driving');
 
   const [markers, setMarkers] = useState([])
   const [allDaycares, setAllDaycares] = useState([]);
   const [parent, setParent] = useState();
   const [searchLocation, setSearchLocation] = useState();
+  const [radius, setRadius] = useState();
   const [parentLocation, setParentLocation] = useState();
 
   // set location_type filter . Its optional.
@@ -44,11 +50,13 @@ const Map = (props) => {
     getAllDaycares();
     getAddress();
     setParent(props.parent);
+    setRadius(props.radius);
   }, [props])
 
   useEffect(() => {
     getCoordinates();
     searchLocationCoordinates();
+    // getDistance();
     if(parent){
       getParentCoordinates();
     }
@@ -61,6 +69,25 @@ const Map = (props) => {
     })
   }
 
+  let origins = [parentLocation];
+  let destinations = [{lat: 61.157, lng: -149.833}]
+
+  // const getDistance = () => {
+  //   debugger;
+  //   const matrix = new google.maps.DistanceMatrixService();
+
+  //   matrix.getDistanceMatrix({
+  //     origins: [new google.maps.LatLng(25.7694708, -80.259947)],
+  //     destinations: [new google.maps.LatLng(25.768915, -80.254659)],
+  //     travelMode: google.maps.TravelMode.DRIVING,
+  //   }, function(response, status) {
+  //     console.log(response);
+  //   });
+  // }
+
+  console.log(radius);
+  console.log(parentLocation);
+
   function getCoordinates(){
     addressArray.forEach(addy => {
       Geocode.fromAddress(addy).then(
@@ -72,7 +99,6 @@ const Map = (props) => {
         else{
           setMarkers(markers => [...markers, {lat, lng}])
         }
-        
         console.log(lat, lng);
       },
       (error) => {

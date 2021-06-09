@@ -101,7 +101,7 @@ function SearchBar(props) {
                 </FormControl>
             </div>
 
-            <div>
+            {/* <div>
                 <FormControl className={classes.select}>
                     <InputLabel htmlFor="radius">Search By Radius</InputLabel>
                         <Select
@@ -116,7 +116,7 @@ function SearchBar(props) {
                         <option value={"30"}>30 Miles</option>
                         </Select>
                 </FormControl>
-            </div>
+            </div> */}
 
             <div style={{display: 'flex'}}>
                 <InputLabel className={classes.inputLabel}>Search By City/State</InputLabel>

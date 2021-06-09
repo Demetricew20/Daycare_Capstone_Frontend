@@ -149,7 +149,9 @@ const DaycareSearchPage = (props) => {
                 callbackAgeGroupSearch={ageGroupCallback}  
                 />
             </div>
-            <div className={classes.map}><Map parent={parent} searchLocation={location} /></div>
+            <div className={classes.map}><Map parent={parent} searchLocation={location} radius={radius} />
+                
+            </div>
             {/* {allDaycares && 
             allDaycares.map((daycare, i) => {
                 return (
