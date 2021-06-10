@@ -85,9 +85,6 @@ const Map = (props) => {
   //   });
   // }
 
-  console.log(radius);
-  console.log(parentLocation);
-
   function getCoordinates(){
     addressArray.forEach(addy => {
       Geocode.fromAddress(addy).then(
@@ -133,7 +130,7 @@ const Map = (props) => {
     }
   }
 
-  const mapLat = () => {
+  const mapCoordinates = () => {
     return(
       markers.map((m, i) => {
         return (<Marker key={i} position={{lat: m.lat, lng: m.lng}} />)
@@ -141,13 +138,9 @@ const Map = (props) => {
     )
   }
 
-  
-
-  console.log(searchLocation);
-
   return(
     <>
-    <GoogleAPIWrapper mapMarkers={mapLat()} parentLocation={parentLocation} searchLocation={searchLocation} />
+    <GoogleAPIWrapper mapMarkers={mapCoordinates()} parentLocation={parentLocation} searchLocation={searchLocation} />
     </>
   )
 
