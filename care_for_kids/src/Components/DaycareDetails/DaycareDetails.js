@@ -3,6 +3,12 @@ import { useLocation } from 'react-router';
 import serviceLayer from '../../Service/serviceLayer';
 import {makeStyles} from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,11 +46,6 @@ const useStyles = makeStyles((theme) => ({
     pageTitle: {
         textAlign: 'center',
 
-    },
-    avatar: {
-        position: 'relative',
-        fontSize: '20rem',
-        zIndex: '4',
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -123,11 +124,11 @@ function DaycareDetails(props) {
         if (daycare){
             return (
                 ageGroupArray.map((group, i) => ( 
-                    <tr>
-                        <td >{group.group}</td>
-                        <td>{group.minCost}</td>
-                        <td>{group.maxCost}</td>
-                    </tr>
+                    <TableRow>
+                        <TableCell >{group.group}</TableCell>
+                        <TableCell>${group.minCost}</TableCell>
+                        <TableCell>${group.maxCost}</TableCell>
+                    </TableRow>
                 ))
             )
     }
@@ -137,7 +138,6 @@ function DaycareDetails(props) {
 
     return (
         <div>
-            <h1>Daycare Details</h1>
             <Paper className={classes.paper}>
                 <div className={classes.usersName}>                    
                     <div>
@@ -163,17 +163,21 @@ function DaycareDetails(props) {
                 : <></>}
                 <div>
                 {daycare && options.switch ?
-                    <table style={{marginTop: '3rem'}}>
-                        <tr>
-                            <th>Programs</th>
-                            <th>Min Cost</th>
-                            <th>Max Cost</th>
-                        </tr>
-                        <tbody>
+                <TableContainer>
+                    <Table style={{marginTop: '3rem'}}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Programs</TableCell>
+                                <TableCell>Min Cost</TableCell>
+                                <TableCell>Max Cost</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                                 {mapGroups()}
-                        </tbody>
-                    </table>
-                : <></>}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                : <></> }
                 </div>
                 {/* {user && daycare && options.switch ? 
                 <div>

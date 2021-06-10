@@ -5,6 +5,12 @@ import jwtDecode from 'jwt-decode';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import serviceLayer from '../../Service/serviceLayer';
 import {makeStyles} from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,10 +52,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         fontSize: '20rem',
         zIndex: '4',
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        // marginTop: theme.spacing(1),
     },
     icon: {
         color: '#5EBA7D',
@@ -140,11 +142,11 @@ export default function ViewParentProfile(props) {
         if (daycare){
             return (
                 ageGroupArray.map((group, i) => ( 
-                    <tr>
-                        <td >{group.group}</td>
-                        <td>{group.minCost}</td>
-                        <td>{group.maxCost}</td>
-                    </tr>
+                    <TableRow>
+                        <TableCell >{group.group}</TableCell>
+                        <TableCell>${group.minCost}</TableCell>
+                        <TableCell>${group.maxCost}</TableCell>
+                    </TableRow>
                 ))
             )
     }
@@ -183,16 +185,20 @@ export default function ViewParentProfile(props) {
                 : <></>}
                 <div>
                 {user && daycare && options.switch ?
-                    <table style={{marginTop: '3rem'}}>
-                        <tr>
-                            <th>Programs</th>
-                            <th>Min Cost</th>
-                            <th>Max Cost</th>
-                        </tr>
-                        <tbody>
-                                {mapGroups()}
-                        </tbody>
-                    </table>
+                    <TableContainer>
+                        <Table style={{marginTop: '3rem'}}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Programs</TableCell>
+                                    <TableCell>Min Cost</TableCell>
+                                    <TableCell>Max Cost</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                    {mapGroups()}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 : <></>}
                 </div>
                 {/* {user && daycare && options.switch ? 
