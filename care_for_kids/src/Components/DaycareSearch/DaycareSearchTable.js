@@ -15,6 +15,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StarIcon from '@material-ui/icons/Star';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,11 +83,11 @@ export default function DaycareCards(props) {
 
         return(
             ageGroupArray.map((group, i) => ( 
-                <tr key={i}>
-                    <td >{group.group}</td>
-                    <td style={{textAlign: 'center'}}>{group.minCost}</td>
-                    <td style={{textAlign: 'center'}}>{group.maxCost}</td>
-                </tr>
+                <TableRow key={i}>
+                    <TableCell>{group.group}</TableCell>
+                    <TableCell style={{textAlign: 'center'}}>${group.minCost}</TableCell>
+                    <TableCell style={{textAlign: 'center'}}>${group.maxCost}</TableCell>
+                </TableRow>
             ))
         )
 
@@ -162,24 +168,21 @@ export default function DaycareCards(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography ><a style={{cursor: 'pointer'}} href={redirectLink}>View Daycare</a></Typography>
-          <Typography >
-            {/* Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.) */}
-          </Typography>
           <Typography>
-            <table style={{marginTop: '3rem'}}>
-                <tr>
-                    <th>Programs</th>
-                    <th>Estimated Min Cost</th>
-                    <th>Estimated Max Cost</th>
-                </tr>
-                <tbody >
+            <TableContainer>
+            <Table style={{marginTop: '3rem'}}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Programs</TableCell>
+                    <TableCell>Estimated Min Cost</TableCell>
+                    <TableCell>Estimated Max Cost</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody >
                     {mapGroups(props.daycare)}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
+            </TableContainer>
           </Typography>
         </CardContent>
       </Collapse>
