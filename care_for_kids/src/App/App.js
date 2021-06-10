@@ -75,6 +75,18 @@ function App() {
     <CssBaseline />
     <NavigationBar user={user} />
     <Switch>
+    <Route path="/" exact={true} render = { props => {
+                if (!user){
+                  return <Route to="/login" component={Login} />
+                }
+                else if (user && user.is_daycare){
+                  return <Route to='/view-daycare-profile' component={ViewDaycareProfile} />
+                }
+                else {
+                  return <Route to='/view-parent-profile' component={ViewParentProfile} />
+                }
+              }}
+            />
       <Route path='/register' component={Register} />
       <Route path='/login' component={Login} />
       <Route path='/create-daycare-profile' component={DaycareProfile} />
