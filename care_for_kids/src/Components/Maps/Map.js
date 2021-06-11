@@ -96,7 +96,6 @@ const Map = (props) => {
         else{
           setMarkers(markers => [...markers, {lat, lng}])
         }
-        console.log(lat, lng);
       },
       (error) => {
         console.error(error);

@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
 const DaycareSearchPage = (props) => {
 
     const [allDaycares, setAllDaycares] = useState([]);
+    const [user, setUser] = useState();
+    const [selectedDaycare, setSelectedDaycare] = useState();
     const [location, setLocation] = useState();
     const [radius, setRadius] = useState();
     const [ageGroup, setAgeGroup] = useState();
@@ -30,6 +32,7 @@ const DaycareSearchPage = (props) => {
     useEffect(() => {
         setParent(props.parent);
         setAllDaycares(props.daycares);
+        setUser(props.user);
     }, [props])
 
     const locationCallback = (dataFromChild) => {
@@ -66,16 +69,14 @@ const DaycareSearchPage = (props) => {
         count = 1;
     }
 
-    console.log(allDaycares)
-    console.log(location);
-
     const searchFilter = () => {
+
         if(age){
             return(
                 allDaycares.map((daycare, i) => {
                     if(daycare.age_groups.includes(age)){
                         return (
-                            <div key={i} style={{marginTop: '2rem'}}>
+                            <div key={i} style={{marginTop: '2rem'}}  onClick={() => setSelectedDaycare(daycare)}>
                                 <DaycareSearchTable 
                                 daycare={daycare}
                                 daycare_id={daycare.id}
@@ -86,8 +87,10 @@ const DaycareSearchPage = (props) => {
                                 street_address={daycare.street_address}
                                 city={daycare.city}
                                 state={daycare.state}
+                                user={user}
                                 />
                             </div>
+                            
                         )
                 }
                 })
@@ -99,7 +102,7 @@ const DaycareSearchPage = (props) => {
                     let address = `${daycare.city}, ${daycare.state}`;
                     if(address.includes(location)){
                         return (
-                            <div key={i} style={{marginTop: '2rem'}}>
+                            <div key={i} style={{marginTop: '2rem'}} onClick={() => setSelectedDaycare(daycare)}>
                                 <DaycareSearchTable 
                                 daycare={daycare}
                                 daycare_id={daycare.id}
@@ -110,6 +113,7 @@ const DaycareSearchPage = (props) => {
                                 street_address={daycare.street_address}
                                 city={daycare.city}
                                 state={daycare.state}
+                                user={user}
                                 />
                             </div>
                         )
@@ -121,7 +125,7 @@ const DaycareSearchPage = (props) => {
             return (
                 allDaycares.map((daycare, i) => {
                     return (
-                        <div key={i} style={{marginTop: '2rem'}}>
+                        <div key={i} style={{marginTop: '2rem'}} onClick={() => setSelectedDaycare(daycare)}>
                             <DaycareSearchTable 
                             daycare={daycare}
                             daycare_id={daycare.id}
@@ -132,6 +136,8 @@ const DaycareSearchPage = (props) => {
                             street_address={daycare.street_address}
                             city={daycare.city}
                             state={daycare.state}
+                            selectedDaycare = {selectedDaycare}
+                            user={user}
                             />
                         </div>
                     )

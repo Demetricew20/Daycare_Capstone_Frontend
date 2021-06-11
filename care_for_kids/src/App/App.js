@@ -93,7 +93,7 @@ function App() {
       <Route path='/create-parent-profile' component={ParentProfile} />
       <Route path='/view-parent-profile' component={ViewParentProfile} />
       <Route path='/view-daycare-profile' component={ViewDaycareProfile} />
-      <Route path='/daycare-search'><DaycareSearchPage allParents={allParents} parent={parent} daycares={allDaycares} /> </Route>
+      <Route path='/daycare-search'><DaycareSearchPage allParents={allParents} parent={parent} daycares={allDaycares} user={user}/> </Route>
       <Route path="/daycare-details"><DaycareDetails daycares={allDaycares} /></Route>
     </Switch>
     </Paper>

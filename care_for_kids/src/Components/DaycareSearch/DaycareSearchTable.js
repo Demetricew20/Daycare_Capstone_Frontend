@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
@@ -21,6 +21,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import serviceLayer from '../../Service/serviceLayer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,14 +49,49 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DaycareCards(props) {
     const classes = useStyles();
+
     const [expanded, setExpanded] = useState(false);
+    const [daycare, setDaycare] = useState({
+      id: null,
+      url: ''
+    });
+    const [showButton, setShowButton] = useState(false);
+    const [user, setUser] = useState();
+    const [review, setReview] = useState();
+    const [userReview, setUserReview ] = useState({
+      user: null,
+      daycare: '',
+      review_rating: null,
+      review_text: '',
+      rated: false,
+  });
+  const [reviews, setReviews] = useState([]);
 
     const handleExpandClick = () => {
     setExpanded(!expanded);
     };
 
+    useEffect(() => {
+      getReviews();
+      setUser(props.user);
+      if(props.selectedDaycare){
+        setDaycare({
+          id: props.selectedDaycare.id,
+          url: props.selectedDaycare.url
+        });
+      }
+    }, [props])
 
-
+    async function getReviews(){
+      try{
+        const response = await serviceLayer.getAllReviews();
+        setReviews(response.data);
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+    console.log(reviews);
     const mapGroups = (daycare) => {
         let ageGroupArray = [];
         if(daycare){
@@ -78,15 +114,14 @@ export default function DaycareCards(props) {
                     ageGroupArray.push({group: age, minCost: daycare.min_cost_preschool, maxCost: daycare.max_cost_preschool});
                 }
             })
-
         }
 
         return(
             ageGroupArray.map((group, i) => ( 
                 <TableRow key={i}>
                     <TableCell>{group.group}</TableCell>
-                    <TableCell style={{textAlign: 'center'}}>${group.minCost}</TableCell>
-                    <TableCell style={{textAlign: 'center'}}>${group.maxCost}</TableCell>
+                    <TableCell >${group.minCost}</TableCell>
+                    <TableCell >${group.maxCost}</TableCell>
                 </TableRow>
             ))
         )
@@ -118,12 +153,59 @@ export default function DaycareCards(props) {
                     </span>
                 
                 }
-
             </div>
                 );
                 })}
         </div> 
     )
+}
+
+const mapReviews = () => {
+
+  return (
+      reviews.map((review, i) => (
+          <div key={i} style={{marginTop: '1rem'}} >
+            {daycare.url === review.daycare[0] ? 
+              <Typography noWrap>
+              <div style={{display: 'flex'}}>
+                  <span>{user.username} -</span>
+                  <span style={{marginLeft: '10px'}}>{review.review_text}</span> 
+                      
+              <div style={{display: 'flex', marginLeft: '10px'}} >        
+                      {[...Array(5)].map((star, i) => {
+                      const ratingValue = i + 1;
+
+                      return (
+                      <div key={i}>
+                          {ratingValue <= review.review_rating ? 
+                              <span>
+                                  <StarIcon
+                                  style={{fill:'#F7C631'}}
+                                  fontSize='small' 
+                                  />
+                              </span>
+                          :  
+                              <span>
+                                  <StarIcon
+                                  style={{fill:'#A5A8AC'}}
+                                  fontSize='small' 
+                                  />
+                              </span>
+                          
+                          }
+
+                      </div>
+                          );
+                          })}
+                </div>
+                
+                </div>
+              </Typography>
+            : <></>}
+          </div>
+      ))
+
+  )
 }
 
   const redirectLink = `daycare-details/${props.daycare_id}`
@@ -167,7 +249,7 @@ export default function DaycareCards(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography ><a style={{cursor: 'pointer'}} href={redirectLink}>View Daycare</a></Typography>
+          {/* <Typography ><a style={{cursor: 'pointer'}} href={redirectLink}>View Daycare</a></Typography> */}
           <Typography>
             <TableContainer>
             <Table style={{marginTop: '3rem'}}>
@@ -183,6 +265,16 @@ export default function DaycareCards(props) {
                 </TableBody>
             </Table>
             </TableContainer>
+          </Typography>
+          <Typography>
+              <Button 
+              variant='contained' 
+              style={{marginTop: '2rem'}}
+              onClick={() => setShowButton(true)}
+              >Leave A Review</Button>
+          </Typography>
+          <Typography>
+            {mapReviews()}
           </Typography>
         </CardContent>
       </Collapse>
