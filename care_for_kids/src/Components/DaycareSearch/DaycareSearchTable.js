@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import {Input} from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -22,6 +23,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import serviceLayer from '../../Service/serviceLayer';
+import './DaycareSearchTable.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +59,8 @@ export default function DaycareCards(props) {
     });
     const [showButton, setShowButton] = useState(false);
     const [user, setUser] = useState();
-    const [review, setReview] = useState();
+    const [allUsers, setAllUsers] = useState([]);
+    const [usernames, setUsernames] = useState();
     const [userReview, setUserReview ] = useState({
       user: null,
       daycare: '',
@@ -66,13 +69,15 @@ export default function DaycareCards(props) {
       rated: false,
   });
   const [reviews, setReviews] = useState([]);
+  const [hover, setHover] = useState(null);
 
     const handleExpandClick = () => {
     setExpanded(!expanded);
     };
 
     useEffect(() => {
-      getReviews();
+      
+      getAllUsers();
       setUser(props.user);
       if(props.selectedDaycare){
         setDaycare({
@@ -81,6 +86,10 @@ export default function DaycareCards(props) {
         });
       }
     }, [props])
+
+    useEffect(() => {
+      getReviews();
+    }, [userReview])
 
     async function getReviews(){
       try{
@@ -91,7 +100,52 @@ export default function DaycareCards(props) {
         console.log(err);
       }
     }
-    console.log(reviews);
+
+    let reviewUserId;
+
+    async function getUsername(){
+      try{
+        const response = await serviceLayer.getUserById(reviewUserId);
+        setUsernames(response.data.username);
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+    
+    async function getAllUsers(){
+      try{
+        const response = await serviceLayer.getAllUsers();
+        setAllUsers(response.data);
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+
+    async function addReview(){
+      try{
+        const data ={
+          user: user.user_id,
+          daycare: [daycare.url],
+          review_rating: userReview.review_rating,
+          review_text: userReview.review_text,
+          rated: false,
+        }
+        const response = await serviceLayer.createReview(data);
+        setUserReview({
+          user: data.user,
+          daycare: data.daycare,
+          review_rating: data.review_rating,
+          review_text: data.review_text,
+          rated: false,
+        })
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+
     const mapGroups = (daycare) => {
         let ageGroupArray = [];
         if(daycare){
@@ -134,7 +188,6 @@ export default function DaycareCards(props) {
             <span style={{position: 'relative', top: '10px'}}>Avg Parent Rating: </span>
             {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
-
             return (
             <div key={i}>
                 {ratingValue <= props.rating ? 
@@ -160,21 +213,19 @@ export default function DaycareCards(props) {
     )
 }
 
-const mapReviews = () => {
 
+const mapReviews = () => {
   return (
       reviews.map((review, i) => (
           <div key={i} style={{marginTop: '1rem'}} >
             {daycare.url === review.daycare[0] ? 
               <Typography noWrap>
               <div style={{display: 'flex'}}>
-                  <span>{user.username} -</span>
+                  <span>{usernames}</span>
                   <span style={{marginLeft: '10px'}}>{review.review_text}</span> 
-                      
               <div style={{display: 'flex', marginLeft: '10px'}} >        
                       {[...Array(5)].map((star, i) => {
                       const ratingValue = i + 1;
-
                       return (
                       <div key={i}>
                           {ratingValue <= review.review_rating ? 
@@ -208,6 +259,62 @@ const mapReviews = () => {
   )
 }
 
+const starRating = () => {
+        
+  return (
+      <div style={{display: 'flex', justifyContent: 'center', marginTop:'3px'}}>
+          {[...Array(5)].map((star, i) => {
+              const ratingValue = i + 1;
+              return (
+                      <div key={i}>
+                          <label>
+                              {ratingValue <= (hover || userReview.review_rating) ?  
+                              <>
+                              <input  type='radio' name='rating' value={ratingValue} onClick={()=>setUserReview({...userReview, review_rating: ratingValue, rated: true})} />
+                              <StarIcon className='star' 
+                              fontSize='large' 
+                              style={{fill: '#F7C631'}}
+                              onMouseEnter={()=>setHover(ratingValue)} 
+                              onMouseLeave={()=>setHover(null)}
+                              />
+                              </>
+                              :
+                              <>
+                              <input  type='radio' name='rating' value={ratingValue} onClick={()=>setUserReview({...userReview, review_rating: ratingValue, rated: true})} />
+                              <StarIcon className='star' 
+                              fontSize='large' 
+                              style={{fill: '#A5A8AC'}}
+                              onMouseEnter={()=>setHover(ratingValue)} 
+                              onMouseLeave={()=>setHover(null)}
+                              />
+                              </>
+                              }
+
+                          </label>
+                      </div>
+          );
+          })}
+      </div>
+  )
+}
+
+const onChangeReview = (e) => {
+  setUserReview({
+      ...userReview, review_text: e.target.value
+  })
+}
+
+const handleSubmit = () => {
+  addReview();
+
+  setUserReview({
+      ...userReview,
+      rated: false,
+      edited: true
+  });
+  
+}
+
   const redirectLink = `daycare-details/${props.daycare_id}`
   return (
     <Card className={classes.root} >
@@ -223,7 +330,7 @@ const mapReviews = () => {
         <Typography variant="body2" color="textSecondary" component="p">
             {props.description}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color="textSecondary" component="p" style={{marginTop: '.75rem'}}>
             <span>Address:</span>
             <span style={{marginLeft: '7px'}}>{props.street_address} {props.city},&nbsp;{props.state}</span>
         </Typography>
@@ -267,11 +374,35 @@ const mapReviews = () => {
             </TableContainer>
           </Typography>
           <Typography>
-              <Button 
-              variant='contained' 
-              style={{marginTop: '2rem'}}
-              onClick={() => setShowButton(true)}
-              >Leave A Review</Button>
+            <div style={{width: '100%', justifyContent: 'start'}}>
+                  {!userReview.rated && !userReview.edited ? <Button variant='contained' style={{marginTop: '.5rem'}} color="primary" onClick={()=>setUserReview({...userReview, rated: true})}>Leave A Review</Button> 
+                  : <></>  }
+                  {userReview.edited && !userReview.rated ? <Button variant='contained' style={{marginTop: '.5rem'}} color="primary" onClick={()=>setUserReview({...userReview, rated: true,})}>Edit Review</Button> 
+                  : <></> }
+                  
+                  {userReview.rated ? 
+                  <>
+                  
+                  <form noValidate onSubmit={() => handleSubmit()} >
+                      <span style={{display: 'flex', marginTop: '.5rem',}}>
+                      <Input 
+                      style={{width: '30rem'}}
+                      multiline
+                      name="review_text"
+                      value={userReview.review_text}
+                      onChange={onChangeReview}
+                      placeholder=" Leave A Review"
+                      type="text"
+                      id='review_text'
+                      className='reviewText'
+                      />
+                      {starRating()}
+                      </span>
+                  <Button type='submit' style={{marginTop: '.5rem'}} variant='contained' color='primary' onClick={() => handleSubmit()}>Submit</Button>
+                  </form>
+                  </>
+                  : <></> }
+              </div>
           </Typography>
           <Typography>
             {mapReviews()}

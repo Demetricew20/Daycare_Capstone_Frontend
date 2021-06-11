@@ -69,7 +69,11 @@ class ServiceLayer {
     getAllReviews(){
         return axiosInstance.get('daycare_review/')
     }
-}
+    
+    createReview(data){
+        return axiosInstance.post('daycare_review/', data)
+    }
 
+}
 
 export default new ServiceLayer();
